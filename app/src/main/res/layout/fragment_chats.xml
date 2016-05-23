@@ -4,10 +4,9 @@
     android:layout_height="match_parent"
     tools:context="com.client.chat.hichat.ChatsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="chats" />
+    <com.handmark.pulltorefresh.library.PullToRefreshListView
+        android:id="@+id/chats_list"
+        android:layout_height="fill_parent"
+        android:layout_width="fill_parent" />
 
 </FrameLayout>
