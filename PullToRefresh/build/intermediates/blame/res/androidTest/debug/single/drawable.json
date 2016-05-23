@@ -1,10 +1,18 @@
 [
     {
+        "merged": "/home/lee/code/androidprojects/HiChat/PullToRefresh/build/intermediates/res/merged/androidTest/debug/drawable/indicator_bg_bottom.xml",
+        "source": "/home/lee/code/androidprojects/HiChat/PullToRefresh/build/intermediates/bundles/debug/res/drawable/indicator_bg_bottom.xml"
+    },
+    {
         "merged": "/home/lee/StudioProjects/HiChat/PullToRefresh/build/intermediates/res/merged/androidTest/debug/drawable/indicator_bg_bottom.xml",
         "source": "/home/lee/StudioProjects/HiChat/PullToRefresh/build/intermediates/bundles/debug/res/drawable/indicator_bg_bottom.xml"
     },
     {
         "merged": "/home/lee/StudioProjects/HiChat/PullToRefresh/build/intermediates/res/merged/androidTest/debug/drawable/indicator_bg_top.xml",
         "source": "/home/lee/StudioProjects/HiChat/PullToRefresh/build/intermediates/bundles/debug/res/drawable/indicator_bg_top.xml"
+    },
+    {
+        "merged": "/home/lee/code/androidprojects/HiChat/PullToRefresh/build/intermediates/res/merged/androidTest/debug/drawable/indicator_bg_top.xml",
+        "source": "/home/lee/code/androidprojects/HiChat/PullToRefresh/build/intermediates/bundles/debug/res/drawable/indicator_bg_top.xml"
     }
 ]

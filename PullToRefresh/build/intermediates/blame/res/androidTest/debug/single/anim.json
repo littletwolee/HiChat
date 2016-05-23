@@ -8,11 +8,27 @@
         "source": "/home/lee/StudioProjects/HiChat/PullToRefresh/build/intermediates/bundles/debug/res/anim/slide_in_from_top.xml"
     },
     {
+        "merged": "/home/lee/code/androidprojects/HiChat/PullToRefresh/build/intermediates/res/merged/androidTest/debug/anim/slide_in_from_top.xml",
+        "source": "/home/lee/code/androidprojects/HiChat/PullToRefresh/build/intermediates/bundles/debug/res/anim/slide_in_from_top.xml"
+    },
+    {
+        "merged": "/home/lee/code/androidprojects/HiChat/PullToRefresh/build/intermediates/res/merged/androidTest/debug/anim/slide_in_from_bottom.xml",
+        "source": "/home/lee/code/androidprojects/HiChat/PullToRefresh/build/intermediates/bundles/debug/res/anim/slide_in_from_bottom.xml"
+    },
+    {
         "merged": "/home/lee/StudioProjects/HiChat/PullToRefresh/build/intermediates/res/merged/androidTest/debug/anim/slide_out_to_bottom.xml",
         "source": "/home/lee/StudioProjects/HiChat/PullToRefresh/build/intermediates/bundles/debug/res/anim/slide_out_to_bottom.xml"
     },
     {
         "merged": "/home/lee/StudioProjects/HiChat/PullToRefresh/build/intermediates/res/merged/androidTest/debug/anim/slide_out_to_top.xml",
         "source": "/home/lee/StudioProjects/HiChat/PullToRefresh/build/intermediates/bundles/debug/res/anim/slide_out_to_top.xml"
+    },
+    {
+        "merged": "/home/lee/code/androidprojects/HiChat/PullToRefresh/build/intermediates/res/merged/androidTest/debug/anim/slide_out_to_bottom.xml",
+        "source": "/home/lee/code/androidprojects/HiChat/PullToRefresh/build/intermediates/bundles/debug/res/anim/slide_out_to_bottom.xml"
+    },
+    {
+        "merged": "/home/lee/code/androidprojects/HiChat/PullToRefresh/build/intermediates/res/merged/androidTest/debug/anim/slide_out_to_top.xml",
+        "source": "/home/lee/code/androidprojects/HiChat/PullToRefresh/build/intermediates/bundles/debug/res/anim/slide_out_to_top.xml"
     }
 ]
