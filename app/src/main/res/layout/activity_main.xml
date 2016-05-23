@@ -54,9 +54,9 @@
                 android:checked="true"
                 android:drawableTop="@drawable/menu_chat_selector"
                 android:gravity="center"
-                android:text="@string/menu_chat"
-                android:textColor="@color/menu_text_checked"
-                android:textSize="8sp" />
+                android:text="@string/menu_chats"
+                android:textColor="@drawable/menu_chat_selector"
+                android:textSize="12sp" />
 
             <RadioButton
                 android:id="@+id/tab_rb_b"
@@ -66,9 +66,9 @@
                 android:button="@null"
                 android:drawableTop="@drawable/menu_address_list_selector"
                 android:gravity="center"
-                android:text="@string/menu_address_list"
-                android:textColor="@color/menu_text_unchecked"
-                android:textSize="8sp" />
+                android:text="@string/menu_contacts"
+                android:textColor="@drawable/menu_address_list_selector"
+                android:textSize="12sp" />
 
             <RadioButton
                 android:id="@+id/tab_rb_c"
@@ -78,9 +78,9 @@
                 android:button="@null"
                 android:drawableTop="@drawable/menu_find_selector"
                 android:gravity="center"
-                android:text="@string/menu_find"
-                android:textColor="@color/menu_text_unchecked"
-                android:textSize="8sp" />
+                android:text="@string/menu_discover"
+                android:textColor="@drawable/menu_find_selector"
+                android:textSize="12sp" />
 
             <RadioButton
                 android:id="@+id/tab_rb_d"
@@ -90,9 +90,9 @@
                 android:button="@null"
                 android:drawableTop="@drawable/menu_me_selector"
                 android:gravity="center"
-                android:text="@string/menu_me"
-                android:textColor="@color/menu_text_unchecked"
-                android:textSize="8sp" />
+                android:text="@string/menu_about_me"
+                android:textColor="@drawable/menu_me_selector"
+                android:textSize="12sp" />
         </RadioGroup>
     </LinearLayout>
 

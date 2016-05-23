@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:drawable="@mipmap/c_me"
-        android:state_checked="true"/>
-    <item android:drawable="@mipmap/me"
-        android:state_checked="false"/>
+    <item android:drawable="@mipmap/c_about_me"
+        android:state_checked="true"
+        android:color="@color/menu_text_checked"/>
+    <item android:drawable="@mipmap/about_me"
+        android:state_checked="false"
+        android:color="@color/menu_text_unchecked"/>
 
 </selector>
