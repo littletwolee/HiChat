@@ -7,24 +7,24 @@
     android:fitsSystemWindows="true"
     tools:context="com.client.chat.hichat.MainActivity">
 
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
-
-    </android.support.design.widget.AppBarLayout>
     <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical" >
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.AppBarOverlay">
 
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+        </android.support.design.widget.AppBarLayout>
         <FrameLayout
             android:id="@+id/tab_content"
             android:layout_width="fill_parent"
@@ -46,52 +46,52 @@
             android:orientation="horizontal" >
 
             <RadioButton
-                android:id="@+id/tab_rb_a"
+                android:id="@+id/tab_rb_chats"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.0"
                 android:button="@null"
                 android:checked="true"
-                android:drawableTop="@drawable/menu_chat_selector"
+                android:drawableTop="@drawable/menu_chats_selector"
                 android:gravity="center"
                 android:text="@string/menu_chats"
-                android:textColor="@drawable/menu_chat_selector"
+                android:textColor="@drawable/menu_chats_selector"
                 android:textSize="12sp" />
 
             <RadioButton
-                android:id="@+id/tab_rb_b"
+                android:id="@+id/tab_rb_contacts"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.0"
                 android:button="@null"
-                android:drawableTop="@drawable/menu_address_list_selector"
+                android:drawableTop="@drawable/menu_contacts_selector"
                 android:gravity="center"
                 android:text="@string/menu_contacts"
-                android:textColor="@drawable/menu_address_list_selector"
+                android:textColor="@drawable/menu_contacts_selector"
                 android:textSize="12sp" />
 
             <RadioButton
-                android:id="@+id/tab_rb_c"
+                android:id="@+id/tab_rb_discover"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.0"
                 android:button="@null"
-                android:drawableTop="@drawable/menu_find_selector"
+                android:drawableTop="@drawable/menu_discover_selector"
                 android:gravity="center"
                 android:text="@string/menu_discover"
-                android:textColor="@drawable/menu_find_selector"
+                android:textColor="@drawable/menu_discover_selector"
                 android:textSize="12sp" />
 
             <RadioButton
-                android:id="@+id/tab_rb_d"
+                android:id="@+id/tab_rb_about_me"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.0"
                 android:button="@null"
-                android:drawableTop="@drawable/menu_me_selector"
+                android:drawableTop="@drawable/menu_about_me_selector"
                 android:gravity="center"
                 android:text="@string/menu_about_me"
-                android:textColor="@drawable/menu_me_selector"
+                android:textColor="@drawable/menu_about_me_selector"
                 android:textSize="12sp" />
         </RadioGroup>
     </LinearLayout>
