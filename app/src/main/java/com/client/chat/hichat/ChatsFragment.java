@@ -2,6 +2,7 @@ package com.client.chat.hichat;
 
 
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 
 import com.client.chat.models.ChatItem;
 import com.client.chat.models.ChatItemData;
+import com.client.chat.tools.DBHelper;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
@@ -36,6 +38,8 @@ public class ChatsFragment extends Fragment {
     private PullToRefreshListView mPullToRefreshListView;
     //private List<Map<String, Object>> mListItems;
     private ChatAdapter mAdapter;
+    DBHelper database;
+    SQLiteDatabase db;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -46,6 +50,7 @@ public class ChatsFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         mPullToRefreshListView = (PullToRefreshListView)getActivity().findViewById(R.id.chats_list);
         mAdapter = new ChatAdapter(this.getContext());
+        database = new DBHelper(this.getActivity());
         mPullToRefreshListView.setOnRefreshListener(new OnRefreshListener<ListView>() {
             @Override
             public void onRefresh(PullToRefreshBase<ListView> refreshView) {
@@ -66,6 +71,9 @@ public class ChatsFragment extends Fragment {
             for (int i = 1; i <= 20; i++) {
                 chatList.add(new ChatItemData(String.valueOf(i), "line"+String.valueOf(i), "friend", null, "hahahah", (new Date()).toString()));
             }
+            db = database.getReadableDatabase();
+            String sql = "insert into user(username,password) values ('Jack Johnson','iLovePopMuisc')";//插入操作的SQL语句
+            db.execSQL(sql);
             return chatList;
         }
         @Override
