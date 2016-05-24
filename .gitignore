@@ -1,2 +1,5 @@
-./.idea/*
+/.idea/*
+/.gradle/*
 *.properties
+PullToRefresh/build/
+build/
