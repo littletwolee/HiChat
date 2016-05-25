@@ -2,6 +2,7 @@ package com.client.chat.hichat;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -120,7 +121,7 @@ public class ChatsFragment extends Fragment {
         //获取一个在数据集中指定索引的视图来显示数据
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            ChatItem chatItem = null;
+            final ChatItem chatItem;
             //如果缓存convertView为空，则需要创建View
             if(convertView == null)
             {
@@ -131,6 +132,14 @@ public class ChatsFragment extends Fragment {
                 chatItem.ChatName = (TextView)convertView.findViewById(R.id.chat_name);
                 chatItem.ChatType = data.get(position).ChatType;
                 chatItem.Pic = (ImageView)convertView.findViewById(R.id.pic);
+                chatItem.Pic.setOnClickListener(new View.OnClickListener(){
+                    @Override
+                    public void onClick(View arg0) {
+                        Intent intent=new Intent(getActivity(),UserInfoActivity.class);
+                        intent.putExtra("userid", chatItem.ChatID);
+                        getActivity().startActivityForResult(intent, 1);
+                    }
+                });
                 chatItem.LastMsg = (TextView)convertView.findViewById(R.id.last_msg);
                 //chatItem.setLastTime(data.get(position).LastTime);
                 //将设置好的布局保存到缓存中，并将其设置在Tag里，以便后面方便取出Tag
