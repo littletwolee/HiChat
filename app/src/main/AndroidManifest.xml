@@ -22,7 +22,8 @@
             android:name=".UserInfoActivity"
             android:label="@string/title_activity_user_info"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name="com.client.chat.tools.ToolBarActivity"></activity>
+        <activity android:name="com.client.chat.tools.ToolBarActivity" />
+        <activity android:name=".ChatActivity"></activity>
     </application>
-
+    <uses-permission android:name="android.permission.INTERNET" />
 </manifest>

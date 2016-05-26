@@ -40,7 +40,7 @@ public class ToolBarHelper {
             R.attr.actionBarSize
     };
 
-    public ToolBarHelper(Context context, int layoutId) {
+    public ToolBarHelper(Context context, int layoutId, int view_tool_bar) {
         this.mContext = context;
         mInflater = LayoutInflater.from(mContext);
         /*初始化整个内容*/
@@ -48,7 +48,7 @@ public class ToolBarHelper {
         /*初始化用户定义的布局*/
         initUserView(layoutId);
         /*初始化toolbar*/
-        initToolBar();
+        initToolBar(view_tool_bar);
     }
 
     private void initContentView() {
@@ -60,9 +60,9 @@ public class ToolBarHelper {
 
     }
 
-    private void initToolBar() {
+    private void initToolBar(int view_tool_bar) {
         /*通过inflater获取toolbar的布局文件*/
-        View toolbar = mInflater.inflate(R.layout.activity_tool_bar, mContentView);
+        View toolbar = mInflater.inflate(view_tool_bar, mContentView);
         mToolBar = (Toolbar) toolbar.findViewById(R.id.id_tool_bar);
     }
 

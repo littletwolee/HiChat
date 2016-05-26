@@ -1,2 +1,2 @@
-include ':app', ':android-async-http-1.4.8'
+include ':app'
 include ':PullToRefresh'

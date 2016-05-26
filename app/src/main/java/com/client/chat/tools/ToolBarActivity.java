@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.client.chat.hichat.R;
+
 public abstract class ToolBarActivity extends AppCompatActivity {
     private ToolBarHelper mToolBarHelper ;
     public Toolbar toolbar ;
@@ -16,7 +18,7 @@ public abstract class ToolBarActivity extends AppCompatActivity {
     @Override
     public void setContentView(int layoutResID) {
 
-        mToolBarHelper = new ToolBarHelper(this,layoutResID) ;
+        mToolBarHelper = new ToolBarHelper(this,layoutResID, R.layout.activity_tool_bar) ;
         toolbar = mToolBarHelper.getToolBar() ;
         setContentView(mToolBarHelper.getContentView());
         setSupportActionBar(toolbar);

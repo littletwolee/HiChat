@@ -19,14 +19,12 @@ public class MainActivity extends AppCompatActivity {
     public List<Fragment> fragments = new ArrayList<Fragment>();
     private HashMap<String, RadioButton> fragmentmap = new HashMap<String, RadioButton>();
     private IBtnCallListener mBtnCallListener;
-    private int num = 0;
-    // private boolean n0, n1, n2, n3, n4, n5, n6 = false;
-    private String url, listurl;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("");
         setSupportActionBar(toolbar);
         fragments.add(new ChatsFragment());
         fragments.add(new ContactsFragment());

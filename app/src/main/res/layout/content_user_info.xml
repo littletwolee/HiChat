@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,70 +26,9 @@
             android:id="@+id/tab_content"
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:layout_weight="1.0" />
+            android:layout_weight="1.0" >
 
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="1dip"
-            android:background="@color/fragmentactivity_frame_color" />
+        </FrameLayout>
 
-        <RadioGroup
-            android:id="@+id/tabs_rg"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="3dip"
-            android:layout_marginTop="3dip"
-            android:gravity="center"
-            android:orientation="horizontal" >
-
-            <RadioButton
-                android:id="@+id/tab_rb_chats"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.0"
-                android:button="@null"
-                android:checked="true"
-                android:drawableTop="@drawable/menu_chats_selector"
-                android:gravity="center"
-                android:text="@string/menu_chats"
-                android:textColor="@drawable/menu_chats_selector"
-                android:textSize="12sp" />
-
-            <RadioButton
-                android:id="@+id/tab_rb_contacts"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.0"
-                android:button="@null"
-                android:drawableTop="@drawable/menu_contacts_selector"
-                android:gravity="center"
-                android:text="@string/menu_contacts"
-                android:textColor="@drawable/menu_contacts_selector"
-                android:textSize="12sp" />
-
-            <RadioButton
-                android:id="@+id/tab_rb_discover"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.0"
-                android:button="@null"
-                android:drawableTop="@drawable/menu_discover_selector"
-                android:gravity="center"
-                android:text="@string/menu_discover"
-                android:textColor="@drawable/menu_discover_selector"
-                android:textSize="12sp" />
-
-            <RadioButton
-                android:id="@+id/tab_rb_about_me"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.0"
-                android:button="@null"
-                android:drawableTop="@drawable/menu_about_me_selector"
-                android:gravity="center"
-                android:text="@string/menu_about_me"
-                android:textColor="@drawable/menu_about_me_selector"
-                android:textSize="12sp" />
-        </RadioGroup>
     </LinearLayout>
 </RelativeLayout>

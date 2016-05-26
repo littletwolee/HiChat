@@ -3,7 +3,9 @@
     <color name="colorPrimary">#222222</color>
     <color name="colorPrimaryDark">#000000</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="fragmentactivity_frame_color">#FFFFFF</color>
+    <color name="fragment_activity_frame_color">#9A9A9A</color>
     <color name="menu_text_checked">#45C01A</color>
     <color name="menu_text_unchecked">#000000</color>
+    <color name="activity_back">#FFFFFF</color>
+    <color name="text_fonts">#000000</color>
 </resources>

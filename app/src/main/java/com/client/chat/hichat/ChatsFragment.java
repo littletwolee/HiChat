@@ -135,7 +135,7 @@ public class ChatsFragment extends Fragment {
                 chatItem.Pic.setOnClickListener(new View.OnClickListener(){
                     @Override
                     public void onClick(View arg0) {
-                        Intent intent=new Intent(getActivity(),UserInfoActivity.class);
+                        Intent intent=new Intent(getActivity(),ChatActivity.class);
                         intent.putExtra("userid", chatItem.ChatID);
                         getActivity().startActivityForResult(intent, 1);
                     }
