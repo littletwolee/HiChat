@@ -8,26 +8,28 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
+        android:gravity="center"
         >
-
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_centerVertical="true"
             android:gravity="center"
             android:text="toolBar"
             android:textColor="@color/activity_back"
             android:textSize="18sp"
-            android:layout_marginRight="?attr/actionBarSize"
-            />
+            android:layout_marginRight="?attr/actionBarSize" />
 
-        <TextView
+        <ImageView
             android:id="@+id/id_txt_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_alignParentRight="true"
+            android:layout_centerHorizontal="true"
             android:layout_marginRight="8dp"
-            android:gravity="center" />
+            android:layout_marginTop="13dp"
+            android:gravity="center"
+            android:background="@mipmap/chat_user_info"/>
 
     </RelativeLayout>
 </RelativeLayout>

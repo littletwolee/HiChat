@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.client.chat.hichat">
+    package="com.client.hichat">
 
     <application
         android:allowBackup="true"
@@ -22,8 +22,12 @@
             android:name=".UserInfoActivity"
             android:label="@string/title_activity_user_info"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name="com.client.chat.tools.ToolBarActivity" />
-        <activity android:name=".ChatActivity"></activity>
+        <activity android:name="com.client.tools.ToolBarActivity" />
+        <activity android:name=".chat.ChatActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize"
+            android:windowSoftInputMode="adjustResize|adjustPan"></activity>
     </application>
     <uses-permission android:name="android.permission.INTERNET" />
 </manifest>

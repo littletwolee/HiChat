@@ -3,9 +3,14 @@
     <color name="colorPrimary">#222222</color>
     <color name="colorPrimaryDark">#000000</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="fragment_activity_frame_color">#9A9A9A</color>
+    <color name="view_line">#B5B5B3</color>
     <color name="menu_text_checked">#45C01A</color>
     <color name="menu_text_unchecked">#000000</color>
-    <color name="activity_back">#FFFFFF</color>
+    <color name="activity_back">#f2f0eb</color>
     <color name="text_fonts">#000000</color>
+    <!--chat activity-->
+    <color name="chat_white">#FFFFFF</color>
+    <!--chat tool -->
+    <color name="chat_tool_font_black">#7A7E83</color>
+    <color name="chat_tool_greeny">#00CB0D</color>
 </resources>
