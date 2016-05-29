@@ -18,4 +18,8 @@
     <color name="chat_tool_greeny">#00CB0D</color>
     <!--user info-->
     <color name="user_info_greeny">#00CB0D</color>
+    <!--login-->
+    <color name="login_text_color">#353535</color>
+    <color name="login_input_color">#DDDDDD</color>
+    <color name="login_background">#F0F0F0</color>
 </resources>
