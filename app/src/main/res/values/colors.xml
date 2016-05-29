@@ -8,9 +8,14 @@
     <color name="menu_text_unchecked">#000000</color>
     <color name="activity_back">#f2f0eb</color>
     <color name="text_fonts">#000000</color>
+    <!--title-->
+    <color name="bar_color">#232325</color>
     <!--chat activity-->
     <color name="chat_white">#FFFFFF</color>
     <!--chat tool -->
+    <color name="fragment_activity_frame_color">#FFFFFF</color>
     <color name="chat_tool_font_black">#7A7E83</color>
     <color name="chat_tool_greeny">#00CB0D</color>
+    <!--user info-->
+    <color name="user_info_greeny">#00CB0D</color>
 </resources>

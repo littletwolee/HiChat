@@ -1,12 +1,11 @@
 package com.client.hichat.chat;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -19,19 +18,19 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.client.hichat.R;
-import com.client.tools.ToolBarActivity;
+import com.client.hichat.UserInfoActivity;
 
 import org.jivesoftware.smack.chat.Chat;
 
 
-public class ChatActivity extends ToolBarActivity {
+public class ChatActivity extends Activity{
     private EditText chat_text_list;
     private ImageView sendmsg;
     private LinearLayout chat_msg_list;
     private Chat topChat;
     private ListView listView;
     private View more;
-    private ImageView iv_emoticons_normal, img_right;
+    private ImageView iv_emoticons_normal, img_user_info, img_back_main;
     private ImageView iv_emoticons_checked;
     private InputMethodManager manager;
     private LinearLayout btnContainer;
@@ -53,6 +52,24 @@ public class ChatActivity extends ToolBarActivity {
         iv_emoticons_normal.setVisibility(View.VISIBLE);
         iv_emoticons_checked = (ImageView) findViewById(R.id.iv_emoticons_checked);
         iv_emoticons_checked.setVisibility(View.INVISIBLE);
+        img_back_main = (ImageView)findViewById(R.id.title_back);
+        img_back_main.setVisibility(View.VISIBLE);
+        img_back_main.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        img_user_info = (ImageView)findViewById(R.id.title_user_info);
+        img_user_info.setVisibility(View.VISIBLE);
+        img_user_info.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(ChatActivity.this,UserInfoActivity.class);
+                intent.putExtra("userid", "");
+                ChatActivity.this.startActivityForResult(intent, 1);
+            }
+        });
         manager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         btnContainer = (LinearLayout) findViewById(R.id.ll_btn_container);
         emojiIconContainer = (LinearLayout) findViewById(R.id.ll_face_container);
@@ -133,6 +150,11 @@ public class ChatActivity extends ToolBarActivity {
 //                });
 //            }
 //        });
+    }
+    public void onClick(View v) {
+
+        // do what you want here
+
     }
     private void setText(final String text)
     {
@@ -216,26 +238,5 @@ public class ChatActivity extends ToolBarActivity {
             buttonSend.setVisibility(View.VISIBLE);
         }
 
-    }
-
-    @Override
-    public void onCreateCustomToolBar(Toolbar toolbar) {
-        super.onCreateCustomToolBar(toolbar);
-        toolbar.showOverflowMenu() ;
-        getLayoutInflater().inflate(R.layout.toobar_button, toolbar) ;
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 }
