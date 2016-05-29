@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/chat_white"
+    android:background="@color/activity_back"
     android:orientation="vertical" >
 
     <include layout="@layout/layout_title"/>
@@ -24,7 +24,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:background="@drawable/login_edit_text_selector"
+                android:background="@drawable/edittext_login"
                 android:hint="@string/username_hint"
                 android:inputType="text"
                 android:paddingLeft="95dp"
@@ -43,7 +43,6 @@
                 android:textColor="@color/login_text_color"
                 android:textSize="16sp" />
         </RelativeLayout>
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_marginTop="10dp"
@@ -54,7 +53,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:background="@drawable/login_edit_text_selector"
+                android:background="@drawable/edittext_login"
                 android:hint="@string/password_hint"
                 android:paddingLeft="95dp"
                 android:inputType="textPassword"
@@ -70,12 +69,12 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="15dp"
                 android:text="@string/password"
-                android:textColor="#353535"
+                android:textColor="@color/login_text_color"
                 android:textSize="16sp" />
         </RelativeLayout>
 
         <Button
-            android:id="@+id/btn_login"
+            android:id="@+id/btn_register"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_marginTop="40dp"
@@ -83,29 +82,13 @@
             android:enabled="false"
             android:paddingBottom="7dp"
             android:paddingTop="7dp"
-            android:text="@string/login"
+            android:text="@string/register"
             android:textColor="@android:color/white"
             android:textSize="18sp" />
 
+
     </LinearLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
 
-        <Button
-            android:layout_margin="33dp"
-            android:padding="8dp"
-            android:background="@color/login_background"
-            android:id="@+id/btn_qtlogin"
-            android:layout_width="80dp"
-            android:layout_height="33dp"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
-            android:text="注册"
-            android:textColor="@color/login_text_color"
-            android:textSize="15sp" />
-    </RelativeLayout>
 
 </LinearLayout>

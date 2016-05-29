@@ -22,8 +22,10 @@
     <string name="attach_video_call">Video Call</string>
     <string name="move_up_to_cancel">slide up cancel sending</string>
     <!--login-->
-    <string name="username" >UserName</string>
-    <string name="username_hint" >Input your UserName</string>
-    <string name="password" >PassWord</string>
-    <string name="password_hint" >Input your UserName</string>
+    <string name="username">UserName</string>
+    <string name="username_hint">Input your UserName</string>
+    <string name="password">PassWord</string>
+    <string name="password_hint">Input your UserName</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
 </resources>

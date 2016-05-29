@@ -1,7 +1,9 @@
-package com.client.hichat;
+package com.client.hichat.user;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.client.hichat.R;
 
 public class LoginActivity extends AppCompatActivity {
 

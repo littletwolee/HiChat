@@ -1,7 +1,9 @@
-package com.client.hichat;
+package com.client.hichat.user;
 
 import android.app.Activity;
 import android.os.Bundle;
+
+import com.client.hichat.R;
 
 public class UserInfoActivity extends Activity {
 

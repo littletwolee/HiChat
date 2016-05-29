@@ -18,7 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.client.hichat.R;
-import com.client.hichat.UserInfoActivity;
+import com.client.hichat.user.UserInfoActivity;
 
 import org.jivesoftware.smack.chat.Chat;
 
