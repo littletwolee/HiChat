@@ -20,13 +20,13 @@
             android:layout_height="48dp" >
 
             <EditText
-                android:id="@+id/et_usertel"
+                android:id="@+id/et_user_name"
                 android:inputType="text"
                 android:hint="@string/username_hint"
                 style="@style/lr_edit_text"/>
 
             <TextView
-                android:layout_alignLeft="@id/et_usertel"
+                android:layout_alignLeft="@id/et_user_name"
                 android:text="@string/username"
                 style="@style/lr_text_view"/>
         </RelativeLayout>
@@ -36,16 +36,17 @@
             android:layout_height="48dp" >
 
             <EditText
-                android:id="@+id/et_pwd"
+                android:id="@+id/et_user_pwd"
                 android:inputType="text"
                 android:hint="@string/password_hint"
                 style="@style/lr_edit_text"/>
 
             <TextView
-                android:layout_alignLeft="@id/et_pwd"
+                android:layout_alignLeft="@id/et_user_pwd"
                 android:text="@string/password"
                 style="@style/lr_text_view"/>
         </RelativeLayout>
+
 
         <Button
             android:id="@+id/btn_register"
@@ -53,13 +54,11 @@
             android:layout_height="45dp"
             android:layout_marginTop="40dp"
             android:background="@drawable/btn_bg_green"
-            android:enabled="false"
             android:paddingBottom="7dp"
             android:paddingTop="7dp"
             android:text="@string/register"
             android:textColor="@android:color/white"
             android:textSize="18sp" />
-
 
     </LinearLayout>
 

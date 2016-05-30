@@ -5,10 +5,14 @@
     <string name="menu_contacts">contacts</string>
     <string name="menu_discover">discover</string>
     <string name="menu_about_me">about me</string>
+    <!--activities-->
+    <string name="register">Register</string>
+    <string name="login">Login</string>
     <!--connection-->
-    <string name="server_url">im.com</string>
+    <string name="api_url">http://10.157.193.81:5280/api/</string>
+    <string name="xmpp_host">10.157.193.81</string>
     <string name="xmpp_port">5222</string>
-    <string name="api_port">5280</string>
+    <string name="http_json">application/json</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_user_info">User Infomation</string>
@@ -28,6 +32,5 @@
     <string name="username_hint">Input your UserName</string>
     <string name="password">PassWord</string>
     <string name="password_hint">Input your PassWord</string>
-    <string name="login">Login</string>
-    <string name="register">Register</string>
+
 </resources>
