@@ -5,10 +5,12 @@
     <string name="menu_contacts">contacts</string>
     <string name="menu_discover">discover</string>
     <string name="menu_about_me">about me</string>
-
+    <!--connection-->
+    <string name="server_url">im.com</string>
+    <string name="xmpp_port">5222</string>
+    <string name="api_port">5280</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="server_url">http://127.0.0.1:5280/api/</string>
     <string name="title_activity_user_info">User Infomation</string>
     <!--chat activity-->
     <string name="button_talk">Hold To Talk</string>
@@ -25,7 +27,7 @@
     <string name="username">UserName</string>
     <string name="username_hint">Input your UserName</string>
     <string name="password">PassWord</string>
-    <string name="password_hint">Input your UserName</string>
+    <string name="password_hint">Input your PassWord</string>
     <string name="login">Login</string>
     <string name="register">Register</string>
 </resources>
