@@ -55,7 +55,7 @@ public class RegisterActivity extends AppCompatActivity {
                 try {
                     AsyncHttpClient client = new AsyncHttpClient();
                     JSONObject params = new JSONObject();
-                    params.put("name", "111");
+                    params.put("name", "");
                     params.put("pwd", "222");
                     client.post(RegisterActivity.this, _Url, new StringEntity(params.toString()), getString(R.string.http_json), new JsonHttpResponseHandler() {
                         @Override

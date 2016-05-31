@@ -20,13 +20,13 @@
             android:layout_height="48dp" >
 
             <EditText
-                android:id="@+id/et_usertel"
+                android:id="@+id/et_user_name"
                 android:inputType="text"
                 android:hint="@string/username_hint"
                 style="@style/lr_edit_text"/>
 
             <TextView
-                android:layout_alignLeft="@id/et_usertel"
+                android:layout_alignLeft="@id/et_user_name"
                 android:text="@string/username"
                 style="@style/lr_text_view"/>
         </RelativeLayout>
@@ -69,13 +69,13 @@
             android:layout_margin="33dp"
             android:padding="8dp"
             android:background="@color/login_background"
-            android:id="@+id/btn_qtlogin"
+            android:id="@+id/btn_register"
             android:layout_width="80dp"
             android:layout_height="33dp"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
-            android:text="注册"
+            android:text="@string/register"
             android:textColor="@color/login_text_color"
             android:textSize="15sp" />
     </RelativeLayout>
