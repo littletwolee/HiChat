@@ -9,7 +9,7 @@
     <string name="register">Register</string>
     <string name="login">Login</string>
     <!--connection-->
-    <string name="api_url">http://10.157.193.81:5280/api/</string>
+    <string name="api_url">http://10.157.193.37:5280/api/</string>
     <string name="xmpp_host">10.157.193.37</string>
     <string name="xmpp_port">5222</string>
     <string name="http_json">application/json</string>

@@ -8,11 +8,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.client.hichat.R;
+import com.client.tools.AsyncRestClient;
 import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.RequestHandle;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,7 +39,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
     private void inIt() {
         //variable assignment
-        _Url = getString(R.string.api_url) + "user/register";
+        _Url = "user/register";
         //register controls
         btn_register = (Button)findViewById(R.id.btn_register);
         et_user_name = (EditText) findViewById(R.id.et_user_name);
@@ -49,40 +51,53 @@ public class RegisterActivity extends AppCompatActivity {
         txt_title.setText(R.string.register);
         txt_left.setText(R.string.login);
         //add events
-        btn_register.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    AsyncHttpClient client = new AsyncHttpClient();
-                    JSONObject params = new JSONObject();
-                    params.put("name", "");
-                    params.put("pwd", "222");
-                    client.post(RegisterActivity.this, _Url, new StringEntity(params.toString()), getString(R.string.http_json), new JsonHttpResponseHandler() {
-                        @Override
-                        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                            super.onSuccess(statusCode, headers, response);
-                            int a = statusCode;
-                        }
-
-                        @Override
-                        public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                            super.onFailure(statusCode, headers, throwable, errorResponse);
-                            String a;
-                        }
-                    });
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-        rl_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        btn_register.setOnClickListener(btn_register_click);
+        rl_back.setOnClickListener(rl_back_click);
     }
+    //handlers
+    View.OnClickListener btn_register_click = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            try {
+                JSONObject params = new JSONObject();
+                String name = et_user_name.getText().toString().trim(),
+                        pwd = et_user_pwd.getText().toString().trim();
 
+                if (name.equals("")){
+                    et_user_name.setError("username is required");
+                    return;
+                }
+                if (pwd.equals("")){
+                    et_user_name.setError("password is required");
+                    return;
+                }
+                params.put("name", name);
+                params.put("pwd", pwd);
+                AsyncRestClient.post(RegisterActivity.this, _Url, new StringEntity(params.toString()), getString(R.string.http_json), registerHandler);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        }
+    };
+    View.OnClickListener rl_back_click = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            finish();
+        }
+    };
+    AsyncHttpResponseHandler registerHandler = new JsonHttpResponseHandler(){
+        @Override
+        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+            super.onSuccess(statusCode, headers, response);
+            int a = statusCode;
+        }
+
+        @Override
+        public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+            super.onFailure(statusCode, headers, throwable, errorResponse);
+            String a;
+        }
+    };
 }
