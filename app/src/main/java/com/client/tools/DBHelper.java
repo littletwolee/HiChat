@@ -19,7 +19,7 @@ public class DBHelper extends SQLiteOpenHelper{
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String sql = "create table user(username varchar(20) not null , password varchar(60) not null );";
+        String sql = "create table user(username varchar(20) not null , password varchar(64) not null );";
         db.execSQL(sql);
     }
 

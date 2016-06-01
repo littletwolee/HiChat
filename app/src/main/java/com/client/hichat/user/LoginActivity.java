@@ -88,7 +88,7 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
             super.onSuccess(statusCode, headers, response);
-            int a = statusCode;
+
         }
 
         @Override
