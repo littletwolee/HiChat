@@ -1,5 +1,6 @@
 package com.client.hichat;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -8,15 +9,28 @@ import android.view.MenuItem;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import com.client.models.DaoMaster;
+import com.client.models.DaoSession;
+import com.client.models.User;
+import com.client.models.UserDao;
+
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+
+import de.greenrobot.dao.query.Query;
+import de.greenrobot.dao.query.QueryBuilder;
 
 public class MainActivity extends AppCompatActivity {
     private RadioGroup rgs;
     public List<Fragment> fragments = new ArrayList<Fragment>();
     private HashMap<String, RadioButton> fragmentmap = new HashMap<String, RadioButton>();
     private IBtnCallListener mBtnCallListener;
+    private SQLiteDatabase db;
+    private DaoMaster daoMaster;
+    private DaoSession daoSession;
+    private UserDao userDao;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +54,26 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                 });
+        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, "notes-db", null);
+        db = helper.getWritableDatabase();
+        daoMaster = new DaoMaster(db);
+        daoSession = daoMaster.newSession();
+        userDao = daoSession.getUserDao();
+        User note = new User(null, "123", "123", new Date());
+        //userDao.insert(note);
+        search();
+    }
+    private void search() {
+        // Query 类代表了一个可以被重复执行的查询
+        Query query = userDao.queryBuilder()
+                .where(UserDao.Properties.Username.eq("123"))
+                .build();
+
+//      查询结果以 List 返回
+        List notes = query.list();
+        // 在 QueryBuilder 类中内置两个 Flag 用于方便输出执行的 SQL 语句与传递参数的值
+        QueryBuilder.LOG_SQL = true;
+        QueryBuilder.LOG_VALUES = true;
     }
     @Override
     public void onAttachFragment(Fragment fragment) {

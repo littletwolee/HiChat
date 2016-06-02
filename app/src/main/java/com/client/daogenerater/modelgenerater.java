@@ -11,12 +11,12 @@ public class modelgenerater {
     public static void main(String[] args) throws Exception {
         Schema schema = new Schema(1000, "com.client.models");
 
-        addNote(schema);
+        addUser(schema);
 
         new DaoGenerator().generateAll(schema, "./app/src/main/java");
     }
 
-    private static void addNote(Schema schema) {
+    private static void addUser(Schema schema) {
         Entity user = schema.addEntity("User");
         user.addIdProperty();
         user.addStringProperty("username").notNull();
