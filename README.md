@@ -14,6 +14,7 @@ If you like it or you have some questions, Feel free to contact me.
 * [jxmpp-core & jxmpp-util-cache](https://github.com/igniterealtime/jxmpp) -- An Open Source XMPP Base Library written in Java
 * [smack](https://github.com/igniterealtime/Smack) -- A highly modular and portable open source XMPP client library written in Java for JVMs and Android
 * [greenDAO](https://github.com/greenrobot/greenDAO) -- A light & fast ORM solution for Android that maps objects to SQLite databases
+* [freemarker]() -- A Java library to generate text output based on templates and changing data
 
 ##Application & Package Version
 
@@ -23,3 +24,4 @@ If you like it or you have some questions, Feel free to contact me.
 * jxmpp-core & jxmpp-util-cache 0.4.1
 * smack 4.1.1
 * greenDAO 2.1.0
+* freemarker 2.3.23
