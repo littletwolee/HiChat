@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        userHelper = new UserHelper(this);
+        userHelper = new UserHelper(MainActivity.this);
         if(userHelper.isAuth()){
             setContentView(R.layout.activity_main);
             fragments.add(new ChatsFragment());

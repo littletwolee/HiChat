@@ -1,9 +1,7 @@
 package com.client.moudles;
 
 import android.content.Context;
-
-import com.client.hichat.R;
-import com.client.models.DaoMaster;
+import com.client.models.User;
 import com.client.models.UserDao;
 import com.client.tools.DBHelper;
 
@@ -14,29 +12,41 @@ import java.util.List;
  */
 public class UserHelper extends DBHelper {
     private UserDao userDao;
+    private User user;
     public UserHelper(Context context){
         super(context);
         userDao = daoSession.getUserDao();
     }
     public boolean isAuth(){
         boolean flag = false;
-        if(userDao.queryBuilder().where(UserDao.Properties.Lastlogin.eq(true)).buildCount().count() > 0){
+        if(userDao.queryBuilder().where(UserDao.Properties.IsLogin.eq(true)).count() > 0){
             flag = true;
         }
         return flag;
     }
-    public com.client.models.User findUser(){
-        com.client.models.User user = null;
-        List<com.client.models.User> users = userDao.queryBuilder().build().list();
-        if(users.size() > 0){
+    public void loginOut(String username){
+        user = findUser(username);
+        user.setIsLogin(false);
+        userDao.update(user);
+    }
+    public User findUser(String username){
+        user = null;
+        List<com.client.models.User> users = userDao.queryBuilder()
+                .where(UserDao.Properties.Username.eq(username)).build().list();
+        if(users != null && users.size() > 0){
             user = users.get(0);
         }
         return user;
     }
-    public boolean createUser(com.client.models.User user){
+    public boolean login(User user){
         boolean flag = false;
-        if(userDao.insert(user) > 0){
+        if(userDao.queryBuilder().where(UserDao.Properties.Username.eq(user.getUsername())).buildCount().count() > 0){
+            userDao.update(user);
             flag = true;
+        }else {
+            if(userDao.insert(user) > 0){
+                flag = true;
+            }
         }
         return flag;
     }
@@ -49,7 +59,7 @@ public class UserHelper extends DBHelper {
         }
         return flag;
     }
-    public void updateUser(com.client.models.User user){
+    public void updateUser(User user){
         userDao.update(user);
     }
 }

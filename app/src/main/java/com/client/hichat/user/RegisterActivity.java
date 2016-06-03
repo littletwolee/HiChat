@@ -1,6 +1,7 @@
 package com.client.hichat.user;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -10,7 +11,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.client.hichat.ChatsFragment;
+import com.client.hichat.MainActivity;
 import com.client.hichat.R;
+import com.client.hichat.chat.ChatActivity;
+import com.client.models.User;
+import com.client.moudles.UserHelper;
 import com.client.tools.AsyncRestClient;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -20,6 +26,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Date;
 
 import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.entity.StringEntity;
@@ -30,7 +37,9 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText et_user_name, et_user_pwd;
     private TextView txt_title, txt_left;
     private RelativeLayout rl_back;
-    private String _Url;
+    private String _Url, name, pwd;
+    private UserHelper userHelper;
+    private User user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,9 +69,8 @@ public class RegisterActivity extends AppCompatActivity {
         public void onClick(View v) {
             try {
                 JSONObject params = new JSONObject();
-                String name = et_user_name.getText().toString().trim(),
-                        pwd = et_user_pwd.getText().toString().trim();
-
+                name = et_user_name.getText().toString().trim();
+                pwd = et_user_pwd.getText().toString().trim();
                 if (name.equals("")){
                     et_user_name.setError("username is required");
                     return;
@@ -91,13 +99,18 @@ public class RegisterActivity extends AppCompatActivity {
         @Override
         public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
             super.onSuccess(statusCode, headers, response);
-            int a = statusCode;
+            try {
+                userHelper.login(new User(null, name, pwd, true, new Date()));
+            }catch (Exception e){}
+            Intent intent = new Intent(RegisterActivity.this, ChatsFragment.class);
+            RegisterActivity.this.startActivity(intent);
         }
 
         @Override
         public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
             super.onFailure(statusCode, headers, responseString, throwable);
-            String a;
+            Toast.makeText(RegisterActivity.this, RegisterActivity.this.getResources().getText(R.string.register_err),
+                    Toast.LENGTH_SHORT).show();
         }
     };
 }

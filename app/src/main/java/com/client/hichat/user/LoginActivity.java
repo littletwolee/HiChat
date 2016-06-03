@@ -35,15 +35,14 @@ public class LoginActivity extends AppCompatActivity {
     private RelativeLayout rl_back;
     private String _Url, name, pwd;
     private UserHelper userHelper;
-    private User user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        userHelper = new UserHelper(this);
         inIt();
     }
     private void inIt() {
-        userHelper = new UserHelper(this);
         //variable assignment
         _Url = "user/login?";
         //register controls
@@ -82,7 +81,7 @@ public class LoginActivity extends AppCompatActivity {
                 return;
             }
             try {
-                userHelper.deleteUser();
+                userHelper.updateUser(userHelper.findUser(name));
             }catch (Exception e){}
             AsyncRestClient.get(LoginActivity.this, _Url+"username="+name+"&password="+pwd, null,
                     getString(R.string.http_json), registerHandler);
@@ -99,7 +98,7 @@ public class LoginActivity extends AppCompatActivity {
         public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
             super.onSuccess(statusCode, headers, response);
             try {
-                userHelper.createUser(new User(null, name, pwd, true, new Date()));
+                userHelper.login(new User(null, name, pwd, true, new Date()));
             }catch (Exception e){}
             finish();
         }
@@ -115,8 +114,6 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(LoginActivity.this, LoginActivity.this.getResources().getText(R.string.login_err),
                         Toast.LENGTH_SHORT).show();
             }
-
-
         }
         
     };

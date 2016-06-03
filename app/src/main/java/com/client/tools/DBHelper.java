@@ -22,7 +22,7 @@ public class DBHelper {
         this.setDaoSession(context);
     }
     private void setDaoSession(Context context){
-        if (daoMaster.equals(null)) {
+        if (daoMaster == null) {
             helper = new DaoMaster.DevOpenHelper(context,
                     context.getResources().getString(R.string.db), null);
             db = helper.getWritableDatabase();

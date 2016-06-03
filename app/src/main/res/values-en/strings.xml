@@ -11,8 +11,8 @@
     <!--sqlite-->
     <string name="db">db</string>
     <!--connection-->
-    <string name="api_url">http://10.157.193.37:5280/api/</string>
-    <string name="xmpp_host">10.157.193.37</string>
+    <string name="api_url">http://10.157.193.72:5280/api/</string>
+    <string name="xmpp_host">10.157.193.72</string>
     <string name="xmpp_port">5222</string>
     <string name="http_json">application/json</string>
     <!-- TODO: Remove or change this placeholder text -->
@@ -29,11 +29,12 @@
     <string name="attach_voice_call">Voice Call</string>
     <string name="attach_video_call">Video Call</string>
     <string name="move_up_to_cancel">slide up cancel sending</string>
-    <!--login-->
+    <!--login & register-->
     <string name="username">UserName</string>
-    <string name="username_hint">Input your UserName</string>
+    <string name="username_hint">Input your username</string>
     <string name="password">PassWord</string>
-    <string name="password_hint">Input your PassWord</string>
-    <string name="login_err">Login Error, Please try again</string>
-    <string name="auth_err">UserName or PassWord Wrong, Please try again</string>
+    <string name="password_hint">Input your password</string>
+    <string name="login_err">Login error, Please try again</string>
+    <string name="auth_err">Username or password wrong, please try again</string>
+    <string name="register_err">Register error, please try again</string>
 </resources>

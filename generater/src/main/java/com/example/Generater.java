@@ -26,9 +26,4 @@ public class Generater {
         user.addBooleanProperty("isLogin").notNull();
         user.addDateProperty("lastlogin").notNull();
     }
-    private static void addToken(Schema schema) {
-        Entity token = schema.addEntity("Token");
-        token.addIdProperty();
-        token.addStringProperty("token").notNull();
-    }
 }
