@@ -11,6 +11,7 @@ public class User {
     private String username;
     /** Not-null value. */
     private String password;
+    private boolean isLogin;
     /** Not-null value. */
     private java.util.Date lastlogin;
 
@@ -21,10 +22,11 @@ public class User {
         this.id = id;
     }
 
-    public User(Long id, String username, String password, java.util.Date lastlogin) {
+    public User(Long id, String username, String password, boolean isLogin, java.util.Date lastlogin) {
         this.id = id;
         this.username = username;
         this.password = password;
+        this.isLogin = isLogin;
         this.lastlogin = lastlogin;
     }
 
@@ -54,6 +56,14 @@ public class User {
     /** Not-null value; ensure this value is available before it is saved to the database. */
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public boolean getIsLogin() {
+        return isLogin;
+    }
+
+    public void setIsLogin(boolean isLogin) {
+        this.isLogin = isLogin;
     }
 
     /** Not-null value. */

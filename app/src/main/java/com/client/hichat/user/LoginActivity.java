@@ -8,8 +8,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.client.hichat.R;
+import com.client.models.User;
+import com.client.moudles.UserHelper;
 import com.client.tools.AsyncRestClient;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -20,6 +23,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Date;
 
 import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.entity.StringEntity;
@@ -29,7 +33,9 @@ public class LoginActivity extends AppCompatActivity {
     private EditText et_user_name, et_user_pwd;
     private TextView txt_title;
     private RelativeLayout rl_back;
-    private String _Url;
+    private String _Url, name, pwd;
+    private UserHelper userHelper;
+    private User user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +43,7 @@ public class LoginActivity extends AppCompatActivity {
         inIt();
     }
     private void inIt() {
+        userHelper = new UserHelper(this);
         //variable assignment
         _Url = "user/login?";
         //register controls
@@ -64,9 +71,8 @@ public class LoginActivity extends AppCompatActivity {
     View.OnClickListener btn_login_click = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            String name = et_user_name.getText().toString().trim(),
-                    pwd = et_user_pwd.getText().toString().trim();
-
+            name = et_user_name.getText().toString().trim();
+            pwd = et_user_pwd.getText().toString().trim();
             if (name.equals("")){
                 et_user_name.setError("username is required");
                 return;
@@ -75,7 +81,11 @@ public class LoginActivity extends AppCompatActivity {
                 et_user_name.setError("password is required");
                 return;
             }
-            AsyncRestClient.get(LoginActivity.this, _Url+"username="+name+"&password="+pwd, null, getString(R.string.http_json), registerHandler);
+            try {
+                userHelper.deleteUser();
+            }catch (Exception e){}
+            AsyncRestClient.get(LoginActivity.this, _Url+"username="+name+"&password="+pwd, null,
+                    getString(R.string.http_json), registerHandler);
         }
     };
     View.OnClickListener rl_back_click = new View.OnClickListener() {
@@ -88,13 +98,25 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
             super.onSuccess(statusCode, headers, response);
-
+            try {
+                userHelper.createUser(new User(null, name, pwd, true, new Date()));
+            }catch (Exception e){}
+            finish();
         }
 
         @Override
         public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
             super.onFailure(statusCode, headers, responseString, throwable);
-            String a;
+            if(statusCode == 401){
+                Toast.makeText(LoginActivity.this, LoginActivity.this.getResources().getText(R.string.auth_err),
+                        Toast.LENGTH_SHORT).show();
+                et_user_name.requestFocus();
+            }else {
+                Toast.makeText(LoginActivity.this, LoginActivity.this.getResources().getText(R.string.login_err),
+                        Toast.LENGTH_SHORT).show();
+            }
+
+
         }
         
     };

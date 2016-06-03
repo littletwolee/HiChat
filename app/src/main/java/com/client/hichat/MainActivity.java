@@ -1,5 +1,6 @@
 package com.client.hichat;
 
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,10 +10,12 @@ import android.view.MenuItem;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import com.client.hichat.user.LoginActivity;
 import com.client.models.DaoMaster;
 import com.client.models.DaoSession;
 import com.client.models.User;
 import com.client.models.UserDao;
+import com.client.moudles.UserHelper;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -31,49 +34,37 @@ public class MainActivity extends AppCompatActivity {
     private DaoMaster daoMaster;
     private DaoSession daoSession;
     private UserDao userDao;
+    private UserHelper userHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        fragments.add(new ChatsFragment());
-        fragments.add(new ContactsFragment());
-        fragments.add(new DiscoverFragment());
-        fragments.add(new AboutMeFragment());
-        rgs = (RadioGroup) findViewById(R.id.tabs_rg);
-        fragmentmap.put("chats", (RadioButton) findViewById(R.id.tab_rb_chats));
-        fragmentmap.put("contacts", (RadioButton) findViewById(R.id.tab_rb_contacts));
-        fragmentmap.put("discover", (RadioButton) findViewById(R.id.tab_rb_discover));
-        fragmentmap.put("about_me", (RadioButton) findViewById(R.id.tab_rb_about_me));
-        FragmentTabAdapter tabAdapter = new FragmentTabAdapter(this, fragments, R.id.tab_content, rgs);
-        tabAdapter
-                .setOnRgsExtraCheckedChangedListener(new FragmentTabAdapter.OnRgsExtraCheckedChangedListener() {
-                    @Override
-                    public void OnRgsExtraCheckedChanged(RadioGroup radioGroup,
-                                                         int checkedId, int index) {
+        userHelper = new UserHelper(this);
+        if(userHelper.isAuth()){
+            setContentView(R.layout.activity_main);
+            fragments.add(new ChatsFragment());
+            fragments.add(new ContactsFragment());
+            fragments.add(new DiscoverFragment());
+            fragments.add(new AboutMeFragment());
+            rgs = (RadioGroup) findViewById(R.id.tabs_rg);
+            fragmentmap.put("chats", (RadioButton) findViewById(R.id.tab_rb_chats));
+            fragmentmap.put("contacts", (RadioButton) findViewById(R.id.tab_rb_contacts));
+            fragmentmap.put("discover", (RadioButton) findViewById(R.id.tab_rb_discover));
+            fragmentmap.put("about_me", (RadioButton) findViewById(R.id.tab_rb_about_me));
+            FragmentTabAdapter tabAdapter = new FragmentTabAdapter(this, fragments, R.id.tab_content, rgs);
+            tabAdapter
+                    .setOnRgsExtraCheckedChangedListener(new FragmentTabAdapter.OnRgsExtraCheckedChangedListener() {
+                        @Override
+                        public void OnRgsExtraCheckedChanged(RadioGroup radioGroup,
+                                                             int checkedId, int index) {
 
-                    }
+                        }
 
-                });
-        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, "notes-db", null);
-        db = helper.getWritableDatabase();
-        daoMaster = new DaoMaster(db);
-        daoSession = daoMaster.newSession();
-        userDao = daoSession.getUserDao();
-        User note = new User(null, "123", "123", new Date());
-        //userDao.insert(note);
-        search();
-    }
-    private void search() {
-        // Query 类代表了一个可以被重复执行的查询
-        Query query = userDao.queryBuilder()
-                .where(UserDao.Properties.Username.eq("123"))
-                .build();
+                    });
+        }else {
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            this.startActivity(intent);
+        }
 
-//      查询结果以 List 返回
-        List notes = query.list();
-        // 在 QueryBuilder 类中内置两个 Flag 用于方便输出执行的 SQL 语句与传递参数的值
-        QueryBuilder.LOG_SQL = true;
-        QueryBuilder.LOG_VALUES = true;
     }
     @Override
     public void onAttachFragment(Fragment fragment) {

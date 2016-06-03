@@ -8,6 +8,8 @@
     <!--activities-->
     <string name="register">Register</string>
     <string name="login">Login</string>
+    <!--sqlite-->
+    <string name="db">db</string>
     <!--connection-->
     <string name="api_url">http://10.157.193.37:5280/api/</string>
     <string name="xmpp_host">10.157.193.37</string>
@@ -32,5 +34,6 @@
     <string name="username_hint">Input your UserName</string>
     <string name="password">PassWord</string>
     <string name="password_hint">Input your PassWord</string>
-
+    <string name="login_err">Login Error, Please try again</string>
+    <string name="auth_err">UserName or PassWord Wrong, Please try again</string>
 </resources>

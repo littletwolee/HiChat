@@ -68,9 +68,6 @@ public class ChatsFragment extends Fragment {
             for (int i = 1; i <= 20; i++) {
                 chatList.add(new ChatItemData(String.valueOf(i), "line"+String.valueOf(i), "friend", null, "hahahah", (new Date()).toString()));
             }
-            db = database.getReadableDatabase();
-            String sql = "insert into user(username,password) values ('Jack Johnson','iLovePopMuisc')";//插入操作的SQL语句
-            db.execSQL(sql);
             return chatList;
         }
         @Override

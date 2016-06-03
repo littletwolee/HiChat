@@ -26,7 +26,8 @@ public class UserDao extends AbstractDao<User, Long> {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property Username = new Property(1, String.class, "username", false, "USERNAME");
         public final static Property Password = new Property(2, String.class, "password", false, "PASSWORD");
-        public final static Property Lastlogin = new Property(3, java.util.Date.class, "lastlogin", false, "LASTLOGIN");
+        public final static Property IsLogin = new Property(3, boolean.class, "isLogin", false, "IS_LOGIN");
+        public final static Property Lastlogin = new Property(4, java.util.Date.class, "lastlogin", false, "LASTLOGIN");
     };
 
 
@@ -45,7 +46,8 @@ public class UserDao extends AbstractDao<User, Long> {
                 "\"_id\" INTEGER PRIMARY KEY ," + // 0: id
                 "\"USERNAME\" TEXT NOT NULL ," + // 1: username
                 "\"PASSWORD\" TEXT NOT NULL ," + // 2: password
-                "\"LASTLOGIN\" INTEGER NOT NULL );"); // 3: lastlogin
+                "\"IS_LOGIN\" INTEGER NOT NULL ," + // 3: isLogin
+                "\"LASTLOGIN\" INTEGER NOT NULL );"); // 4: lastlogin
     }
 
     /** Drops the underlying database table. */
@@ -65,7 +67,8 @@ public class UserDao extends AbstractDao<User, Long> {
         }
         stmt.bindString(2, entity.getUsername());
         stmt.bindString(3, entity.getPassword());
-        stmt.bindLong(4, entity.getLastlogin().getTime());
+        stmt.bindLong(4, entity.getIsLogin() ? 1L: 0L);
+        stmt.bindLong(5, entity.getLastlogin().getTime());
     }
 
     /** @inheritdoc */
@@ -81,7 +84,8 @@ public class UserDao extends AbstractDao<User, Long> {
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.getString(offset + 1), // username
             cursor.getString(offset + 2), // password
-            new java.util.Date(cursor.getLong(offset + 3)) // lastlogin
+            cursor.getShort(offset + 3) != 0, // isLogin
+            new java.util.Date(cursor.getLong(offset + 4)) // lastlogin
         );
         return entity;
     }
@@ -92,7 +96,8 @@ public class UserDao extends AbstractDao<User, Long> {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setUsername(cursor.getString(offset + 1));
         entity.setPassword(cursor.getString(offset + 2));
-        entity.setLastlogin(new java.util.Date(cursor.getLong(offset + 3)));
+        entity.setIsLogin(cursor.getShort(offset + 3) != 0);
+        entity.setLastlogin(new java.util.Date(cursor.getLong(offset + 4)));
      }
     
     /** @inheritdoc */
