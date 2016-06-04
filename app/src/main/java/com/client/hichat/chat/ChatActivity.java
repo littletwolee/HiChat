@@ -4,12 +4,15 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.text.format.DateUtils;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -17,36 +20,40 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.client.adapters.ChatAdapter;
 import com.client.hichat.R;
 import com.client.hichat.user.UserInfoActivity;
+import com.client.models.ChatItemData;
+import com.client.tools.DBHelper;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 import org.jivesoftware.smack.chat.Chat;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 
 public class ChatActivity extends Activity{
-    private EditText chat_text_list;
-    private ImageView sendmsg;
-    private LinearLayout chat_msg_list;
-    private Chat topChat;
-    private ListView listView;
-    private View more;
-    private ImageView iv_emoticons_normal, img_user_info, img_back_main;
-    private ImageView iv_emoticons_checked;
-    private InputMethodManager manager;
-    private LinearLayout btnContainer;
-    private LinearLayout emojiIconContainer;
-    private RelativeLayout edittext_layout;
-    private View buttonSetModeKeyboard;
-    private View buttonSend;
-    private View buttonPressToSpeak;
-    private  View btnMore;
-    private View buttonSetModeVoice;
     private EditText mEditTextContent;
+    private Chat topChat;
+    private PullToRefreshListView listView;
+    private ImageView iv_emoticons_normal, img_user_info, img_back_main, iv_emoticons_checked;
+    private InputMethodManager manager;
+    private LinearLayout btnContainer, emojiIconContainer;
+    private RelativeLayout edittext_layout;
+    private View buttonSetModeKeyboard, more, buttonSend, buttonPressToSpeak, btnMore, buttonSetModeVoice;
+    private ChatAdapter chatAdapter;
+    DBHelper database;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
-        listView = (ListView) findViewById(R.id.list);
+        inIt();
+    }
+    private void inIt() {
+        listView = (PullToRefreshListView) findViewById(R.id.list);
         more = findViewById(R.id.more);
         iv_emoticons_normal = (ImageView) findViewById(R.id.iv_emoticons_normal);
         iv_emoticons_normal.setVisibility(View.VISIBLE);
@@ -54,33 +61,34 @@ public class ChatActivity extends Activity{
         iv_emoticons_checked.setVisibility(View.INVISIBLE);
         img_back_main = (ImageView)findViewById(R.id.title_back);
         img_back_main.setVisibility(View.VISIBLE);
-        img_back_main.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
         img_user_info = (ImageView)findViewById(R.id.title_user_info);
         img_user_info.setVisibility(View.VISIBLE);
-        img_user_info.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(ChatActivity.this,UserInfoActivity.class);
-                intent.putExtra("userid", "");
-                ChatActivity.this.startActivityForResult(intent, 1);
-            }
-        });
         manager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         btnContainer = (LinearLayout) findViewById(R.id.ll_btn_container);
         emojiIconContainer = (LinearLayout) findViewById(R.id.ll_face_container);
         edittext_layout = (RelativeLayout) findViewById(R.id.edit_text_layout);
         edittext_layout.setBackgroundResource(R.mipmap.input_bar_bg_normal);
         buttonSetModeKeyboard = findViewById(R.id.btn_set_mode_keyboard);
-        btnMore = (Button) findViewById(R.id.btn_more);
+        btnMore = findViewById(R.id.btn_more);
         buttonSend = findViewById(R.id.btn_send);
         buttonPressToSpeak = findViewById(R.id.btn_press_to_speak);
         buttonSetModeVoice = findViewById(R.id.btn_set_mode_voice);
         mEditTextContent = (EditText) findViewById(R.id.et_send_message);
+        chatAdapter = new ChatAdapter(ChatActivity.this);
+        database = new DBHelper(ChatActivity.this);
+        listView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
+            @Override
+            public void onRefresh(PullToRefreshBase<ListView> refreshView) {
+                String label = DateUtils.formatDateTime(ChatActivity.this, System.currentTimeMillis(),
+                        DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_ALL);
+                refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(label);
+                new GetDataTask().execute();
+            }
+        });
+        new GetDataTask().execute();
+        //add events
+        img_back_main.setOnClickListener(rl_back_click);
+        img_user_info.setOnClickListener(img_user_info_click);
 //        chat_text_list = (EditText)findViewById(R.id.chat_msg_box);
 //        sendmsg = (ImageView)findViewById(R.id.more_type_btn);
 //        chat_msg_list = (LinearLayout)findViewById(R.id.chat_msg_list);
@@ -151,11 +159,37 @@ public class ChatActivity extends Activity{
 //            }
 //        });
     }
-    public void onClick(View v) {
+    //add events
+    View.OnClickListener rl_back_click = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            finish();
+        }
+    };
+    View.OnClickListener img_user_info_click = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent=new Intent(ChatActivity.this,UserInfoActivity.class);
+            intent.putExtra("userid", "");
+            ChatActivity.this.startActivityForResult(intent, 1);
+        }
+    };
+    TextWatcher watcher = new TextWatcher() {
 
-        // do what you want here
-
-    }
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {}
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+        @Override
+        public void afterTextChanged(Editable s) {
+            if(mEditTextContent.getText().toString().length() > 0){
+                buttonSend.setVisibility(View.VISIBLE);
+            }else {
+                buttonSend.setVisibility(View.GONE);
+            }
+        }
+    };
+    //handlers
     private void setText(final String text)
     {
         runOnUiThread(new Runnable(){
@@ -163,12 +197,12 @@ public class ChatActivity extends Activity{
                 TextView tv = new TextView(ChatActivity.this);
                 tv.setTextColor(Color.parseColor("#000000"));
                 tv.setText(text);
-                chat_msg_list.addView(tv);
+                //chat_msg_list.addView(tv);
             };
         });
     }
     public void editClick(View v) {
-        listView.setSelection(listView.getCount() - 1);
+        //listView.setSelection(listView.getCount() - 1);
         if (more.getVisibility() == View.VISIBLE) {
             more.setVisibility(View.GONE);
             iv_emoticons_normal.setVisibility(View.VISIBLE);
@@ -238,5 +272,26 @@ public class ChatActivity extends Activity{
             buttonSend.setVisibility(View.VISIBLE);
         }
 
+    }
+    private class GetDataTask extends AsyncTask<Void, Void, List<ChatItemData>> {
+
+        @Override
+        protected List<ChatItemData> doInBackground(Void... params) {
+            List<ChatItemData> chatList = new ArrayList<ChatItemData>();
+            for (int i = 1; i <= 20; i++) {
+                chatList.add(new ChatItemData(String.valueOf(i), "line"+String.valueOf(i), "friend", null, "hahahah", (new Date()).toString()));
+            }
+            return chatList;
+        }
+        @Override
+        protected void onPostExecute(List<ChatItemData> result) {
+            chatAdapter.data = result;
+            listView.getRefreshableView().setAdapter(chatAdapter);
+            chatAdapter.notifyDataSetChanged();
+
+            // Call onRefreshComplete when the list has been refreshed.
+            listView.onRefreshComplete();
+            super.onPostExecute(result);
+        }
     }
 }
