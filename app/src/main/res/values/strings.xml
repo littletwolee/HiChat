@@ -37,4 +37,7 @@
     <string name="login_err">Login error, Please try again</string>
     <string name="auth_err">Username or password wrong, please try again</string>
     <string name="register_err">Register error, please try again</string>
+    <!--chat-->
+    <string name="text_ack_msg">read</string>
+    <string name="text_delivered_msg">delivered</string>
 </resources>
