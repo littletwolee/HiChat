@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -23,16 +22,12 @@ import android.widget.TextView;
 import com.client.adapters.ChatAdapter;
 import com.client.hichat.R;
 import com.client.hichat.user.UserInfoActivity;
-import com.client.models.ChatItemData;
+import com.client.tasks.ChatGetDataTask;
 import com.client.tools.DBHelper;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 import org.jivesoftware.smack.chat.Chat;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 
 public class ChatActivity extends Activity{
@@ -45,6 +40,7 @@ public class ChatActivity extends Activity{
     private RelativeLayout edittext_layout;
     private View buttonSetModeKeyboard, more, buttonSend, buttonPressToSpeak, btnMore, buttonSetModeVoice;
     private ChatAdapter chatAdapter;
+    private ChatGetDataTask chatGetDataTask;
     DBHelper database;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,16 +72,17 @@ public class ChatActivity extends Activity{
         mEditTextContent = (EditText) findViewById(R.id.et_send_message);
         chatAdapter = new ChatAdapter(ChatActivity.this);
         database = new DBHelper(ChatActivity.this);
+        chatGetDataTask = new ChatGetDataTask(chatAdapter, listView);
         listView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
             @Override
             public void onRefresh(PullToRefreshBase<ListView> refreshView) {
                 String label = DateUtils.formatDateTime(ChatActivity.this, System.currentTimeMillis(),
                         DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_ALL);
                 refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(label);
-                new GetDataTask().execute();
+                chatGetDataTask.execute();
             }
         });
-        new GetDataTask().execute();
+        chatGetDataTask.execute();
         //add events
         img_back_main.setOnClickListener(rl_back_click);
         img_user_info.setOnClickListener(img_user_info_click);
@@ -272,26 +269,5 @@ public class ChatActivity extends Activity{
             buttonSend.setVisibility(View.VISIBLE);
         }
 
-    }
-    private class GetDataTask extends AsyncTask<Void, Void, List<ChatItemData>> {
-
-        @Override
-        protected List<ChatItemData> doInBackground(Void... params) {
-            List<ChatItemData> chatList = new ArrayList<ChatItemData>();
-            for (int i = 1; i <= 20; i++) {
-                chatList.add(new ChatItemData(String.valueOf(i), "line"+String.valueOf(i), "friend", null, "hahahah", (new Date()).toString()));
-            }
-            return chatList;
-        }
-        @Override
-        protected void onPostExecute(List<ChatItemData> result) {
-            chatAdapter.data = result;
-            listView.getRefreshableView().setAdapter(chatAdapter);
-            chatAdapter.notifyDataSetChanged();
-
-            // Call onRefreshComplete when the list has been refreshed.
-            listView.onRefreshComplete();
-            super.onPostExecute(result);
-        }
     }
 }
