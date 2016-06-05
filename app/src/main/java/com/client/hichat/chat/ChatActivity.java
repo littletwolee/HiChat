@@ -174,17 +174,17 @@ public class ChatActivity extends Activity{
     TextWatcher watcher = new TextWatcher() {
 
         @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {}
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-        @Override
-        public void afterTextChanged(Editable s) {
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
             if(mEditTextContent.getText().toString().length() > 0){
                 buttonSend.setVisibility(View.VISIBLE);
             }else {
                 buttonSend.setVisibility(View.GONE);
             }
         }
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+        @Override
+        public void afterTextChanged(Editable s) {}
     };
     //handlers
     private void setText(final String text)
