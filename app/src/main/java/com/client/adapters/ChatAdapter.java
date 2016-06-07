@@ -10,6 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.client.enums.TransferMSG;
 import com.client.hichat.R;
 import com.client.hichat.chat.ChatActivity;
 import com.client.models.ChatItem;
@@ -57,9 +58,13 @@ public class ChatAdapter extends BaseAdapter {
         //如果缓存convertView为空，则需要创建View
         if(convertView == null)
         {
+            ChatItemData chatItemData = data.get(position);
+            if(chatItemData.MsgType == TransferMSG.TransferType.RECEIVE) {
+
+            }
             chatItem = new ChatItem();
             //根据自定义的Item布局加载布局
-            convertView = mInflater.inflate(R.layout.chat_list_item, null);
+            convertView = mInflater.inflate(R.layout.layout_chat_receive_msg, null);
             chatItem.ChatID = data.get(position).ChatID;
             chatItem.ChatName = (TextView)convertView.findViewById(R.id.chat_name);
             chatItem.ChatType = data.get(position).ChatType;

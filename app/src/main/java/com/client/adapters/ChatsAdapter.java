@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.client.hichat.R;
 import com.client.hichat.chat.ChatActivity;
 import com.client.models.ChatItem;
-import com.client.models.ChatItemData;
+import com.client.models.ChatsItemData;
 
 import java.util.List;
 
@@ -23,7 +23,7 @@ import java.util.List;
 public class ChatsAdapter extends BaseAdapter {
     private LayoutInflater mInflater = null;
     private Activity activity = null;
-    public List<ChatItemData> data;
+    public List<ChatsItemData> data;
     public ChatsAdapter(Context context)
     {
         //根据context上下文加载布局，这里的是Demo17Activity本身，即this

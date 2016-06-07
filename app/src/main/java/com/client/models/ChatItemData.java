@@ -1,22 +1,29 @@
 package com.client.models;
 
+import android.view.View;
+
+import com.client.enums.TransferMSG;
+
+import java.util.Date;
+
 /**
- * Created by lee on 5/24/16.
+ * Created by lee on 6/7/16.
  */
 public class ChatItemData {
-    public  ChatItemData(){}
-    public ChatItemData(String chatID, String chatName, String chatType, byte[] pic, String lastMsg, String lastTime) {
-        this.ChatID = chatID;
-        this.ChatName = chatName;
-        this.ChatType = chatType;
-        this.Pic = pic;
-        this.LastMsg = lastMsg;
-        this.LastTime = lastTime;
+    public ChatItemData() {
     }
-    public String ChatID;
-    public String ChatName;
-    public String ChatType;
-    public byte[] Pic;
-    public String LastMsg;
-    public String LastTime;
+
+    public ChatItemData(String userName, String msg, TransferMSG.TransferType msgType, Date msgDate, TransferMSG.SendStatus msgStatus) {
+        this.UserName = userName;
+        this.Msg = msg;
+        this.MsgType = msgType;
+        this.MsgDate = msgDate;
+        this.MsgStatus = msgStatus;
+
+    }
+    public String UserName;
+    public String Msg;
+    public TransferMSG.TransferType MsgType;
+    public Date MsgDate;
+    public TransferMSG.SendStatus MsgStatus;
 }

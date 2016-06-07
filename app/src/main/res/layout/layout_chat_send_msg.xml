@@ -18,7 +18,7 @@
         android:layout_marginTop="@dimen/margin_chat_activity" >
 
         <ImageView
-            android:id="@+id/iv_userhead"
+            android:id="@+id/iv_user_head"
             android:layout_width="@dimen/size_avatar"
             android:layout_height="@dimen/size_avatar"
             android:layout_alignParentRight="true"
@@ -28,12 +28,12 @@
             android:scaleType="fitXY" />
 
         <TextView
-            android:id="@+id/tv_chatcontent"
+            android:id="@+id/tv_msg"
             style="@style/chat_content_date_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/margin_chat_activity"
-            android:layout_toLeftOf="@id/iv_userhead"
+            android:layout_toLeftOf="@id/iv_user_head"
             android:autoLink="web"
             android:padding="17dp"
             android:background="@drawable/chat_send_msg_bg"
@@ -49,7 +49,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/tv_chatcontent"
+            android:layout_toLeftOf="@id/tv_msg"
             android:clickable="true"
             android:src="@drawable/chat_send_msg_state_failed_resend"
             android:visibility="gone" />
@@ -60,7 +60,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/tv_chatcontent"
+            android:layout_toLeftOf="@id/tv_msg"
             android:text="@string/text_ack_msg"
             android:textSize="12sp"
             android:visibility="invisible" />
@@ -71,7 +71,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/tv_chatcontent"
+            android:layout_toLeftOf="@id/tv_msg"
             android:text="@string/text_delivered_msg"
             android:textSize="12sp"
             android:visibility="invisible" />
@@ -84,7 +84,7 @@
             android:indeterminateOnly="true"
             android:indeterminateBehavior="repeat"
             android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/tv_chatcontent"
+            android:layout_toLeftOf="@id/tv_msg"
             android:visibility="visible" />
     </RelativeLayout>
 

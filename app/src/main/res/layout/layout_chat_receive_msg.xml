@@ -18,7 +18,7 @@
         android:layout_marginTop="@dimen/margin_chat_activity" >
 
         <ImageView
-            android:id="@+id/iv_userhead"
+            android:id="@+id/iv_user_head"
             android:layout_width="@dimen/size_avatar"
             android:layout_height="@dimen/size_avatar"
             android:layout_alignParentLeft="true"
@@ -32,14 +32,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
-            android:layout_toRightOf="@id/iv_userhead"/>
+            android:layout_toRightOf="@id/iv_user_head"/>
         <TextView
             android:maxWidth="225.0dip"
-            android:id="@+id/tv_chatcontent"
+            android:id="@+id/tv_msg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/margin_chat_activity"
-            android:layout_toRightOf="@id/iv_userhead"
+            android:layout_toRightOf="@id/iv_user_head"
             android:background="@drawable/chat_receive_msg_bg"
             android:layout_below="@+id/tv_userid"
             android:autoLink="web"
