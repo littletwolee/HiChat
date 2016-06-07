@@ -45,3 +45,8 @@ dependencies {
     compile fileTree(include: ['*.arr'], dir: 'libs')
     compile 'com.handmark.pulltorefresh.library:Android-PullToRefresh:2.1.1@aar'
 }
+android {
+    lintOptions {
+        abortOnError false
+    }
+}
