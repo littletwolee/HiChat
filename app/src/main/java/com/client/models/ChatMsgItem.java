@@ -14,10 +14,9 @@ import java.util.Date;
  * Created by lee on 6/7/16.
  */
 public class ChatMsgItem {
-    public  ChatMsgItem(){}
-    public ChatMsgItem(View view, ChatItemData chatItemData) {
-        viewInit(view, chatItemData.MsgType);
-        setData(chatItemData);
+    public ChatMsgItem(){}
+    public ChatMsgItem(View view, TransferMSG.TransferType transferType) {
+        viewInit(view, transferType);
     }
     private void viewInit(View view, TransferMSG.TransferType transferType){
         if (transferType == TransferMSG.TransferType.RECEIVE){
@@ -29,15 +28,15 @@ public class ChatMsgItem {
         this.Pic = (ImageView) view.findViewById(R.id.iv_user_head);
         this.MsgDate = (TextView) view.findViewById(R.id.timestamp);
     }
-    private void setData(ChatItemData chatItemData){
+    private void setData(ChatMsgItem chatMsgItem, ChatItemData chatItemData){
         if(chatItemData.MsgType == TransferMSG.TransferType.RECEIVE){
-            this.setUserName(chatItemData.UserName);
+            chatMsgItem.setUserName(chatItemData.UserName);
         } else {
-            this.isSending(true);
+            chatMsgItem.isSending(true);
         }
-        this.setMsg(chatItemData.Msg);
-        this.setPic(chatItemData.Pic);
-        this.setMsgDate(chatItemData.MsgDate);
+        chatMsgItem.setMsg(chatItemData.Msg);
+        chatMsgItem.setPic(chatItemData.Pic);
+        chatMsgItem.setMsgDate(chatItemData.MsgDate);
     }
     public ImageView Pic;
     public TextView UserName;
@@ -60,5 +59,11 @@ public class ChatMsgItem {
         if(issending){
             this.Sending.setVisibility(View.GONE);
         }
+    }
+    //
+    //internal
+    //
+    public void setObject(ChatMsgItem chatMsgItem, ChatItemData chatItemData){
+        chatMsgItem.setData(chatMsgItem, chatItemData);
     }
 }

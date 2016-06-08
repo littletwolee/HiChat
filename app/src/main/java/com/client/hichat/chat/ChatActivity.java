@@ -3,7 +3,6 @@ package com.client.hichat.chat;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -17,7 +16,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.client.adapters.ChatAdapter;
 import com.client.enums.TransferMSG;
@@ -275,7 +273,7 @@ public class ChatActivity extends Activity{
     View.OnClickListener btn_Send_click = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            chatAdapter.data.add(new ChatItemData("1","2",
+            chatAdapter.data.add(new ChatItemData("me","5555",
                     TransferMSG.TransferType.RECEIVE, new Date(), TransferMSG.SendStatus.COMPLETED,null));
             listView.getRefreshableView().setAdapter(chatAdapter);
             chatAdapter.notifyDataSetChanged();

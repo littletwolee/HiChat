@@ -23,10 +23,10 @@ public class ChatGetDataTask extends AsyncTask<Void, Void, List<ChatItemData>> {
     protected List<ChatItemData> doInBackground(Void... params) {
         List<ChatItemData> chatList = new ArrayList<ChatItemData>();
         ChatItemData chatItemData;
-        for (int i = 1; i <= 20; i++) {
+        for (int i = 1; i <= 5; i++) {
             chatItemData = new ChatItemData();
             if(i % 2 == 0) {
-                chatItemData.Msg = "send";
+                chatItemData.Msg = String.valueOf(i);;
                 chatItemData.MsgType = TransferMSG.TransferType.SEND;
                 chatItemData.MsgDate = new Date();
                 if(i % 4 == 0){
@@ -36,7 +36,7 @@ public class ChatGetDataTask extends AsyncTask<Void, Void, List<ChatItemData>> {
                 }
                 chatItemData.UserName = "me";
             } else {
-                chatItemData.Msg = "receive";
+                chatItemData.Msg = String.valueOf(i);
                 chatItemData.MsgType = TransferMSG.TransferType.RECEIVE;
                 chatItemData.MsgDate = new Date();
                 chatItemData.UserName = "friend";

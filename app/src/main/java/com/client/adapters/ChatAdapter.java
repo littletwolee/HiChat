@@ -2,6 +2,7 @@ package com.client.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,7 +38,7 @@ public class ChatAdapter extends BaseAdapter {
     public Object getItem(int position) {
         // Get the data item associated with the specified position in the data set.
         //获取数据集中与指定索引对应的数据项
-        return position;
+        return null != data?data.get(position):null;
     }
     @Override
     public long getItemId(int position) {
@@ -50,18 +51,18 @@ public class ChatAdapter extends BaseAdapter {
     //获取一个在数据集中指定索引的视图来显示数据
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        final ChatMsgItem chatMsgItem;
+        ChatMsgItem chatMsgItem = null;
+        ChatItemData chatItemData = null;
         //如果缓存convertView为空，则需要创建View
-        if(convertView == null)
-        {
-            ChatItemData chatItemData = data.get(position);
+        if(null == convertView){
+            chatItemData = data.get(position);
             if(chatItemData.MsgType == TransferMSG.TransferType.RECEIVE) {
                 convertView = mInflater.inflate(R.layout.layout_chat_receive_msg, null);
             } else {
                 convertView = mInflater.inflate(R.layout.layout_chat_send_msg, null);
             }
             //根据自定义的Item布局加载布局
-            chatMsgItem = new ChatMsgItem(convertView,chatItemData);
+            chatMsgItem = new ChatMsgItem(convertView, chatItemData.MsgType);
 //            ChatDataItem.Pic.setOnClickListener(new View.OnClickListener(){
 //                @Override
 //                public void onClick(View arg0) {
@@ -75,6 +76,12 @@ public class ChatAdapter extends BaseAdapter {
         } else {
             chatMsgItem = (ChatMsgItem)convertView.getTag();
         }
+        if(chatItemData != null){
+            chatMsgItem.setObject(chatMsgItem, chatItemData);
+        } else {
+            Log.d("iii", String.valueOf(position));
+        }
+
         return convertView;
     }
 }
