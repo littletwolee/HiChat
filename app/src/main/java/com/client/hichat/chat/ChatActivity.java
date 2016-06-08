@@ -20,14 +20,18 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.client.adapters.ChatAdapter;
+import com.client.enums.TransferMSG;
 import com.client.hichat.R;
 import com.client.hichat.user.UserInfoActivity;
+import com.client.models.ChatItemData;
 import com.client.tasks.ChatGetDataTask;
 import com.client.tools.DBHelper;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 import org.jivesoftware.smack.chat.Chat;
+
+import java.util.Date;
 
 
 public class ChatActivity extends Activity{
@@ -84,6 +88,8 @@ public class ChatActivity extends Activity{
         btnSetModeVoice.setOnClickListener(btn_SetModeVoice_click);
         btnMore.setOnClickListener(button_more_click);
         mEditTextContent.setOnClickListener(et_mEditTextContent_click);
+        mEditTextContent.addTextChangedListener(watcher);
+        btnSend.setOnClickListener(btn_Send_click);
 //        chat_text_list = (EditText)findViewById(R.id.chat_msg_box);
 //        sendmsg = (ImageView)findViewById(R.id.more_type_btn);
 //        chat_msg_list = (LinearLayout)findViewById(R.id.chat_msg_list);
@@ -266,6 +272,16 @@ public class ChatActivity extends Activity{
             }
         }
     };
+    View.OnClickListener btn_Send_click = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            chatAdapter.data.add(new ChatItemData("1","2",
+                    TransferMSG.TransferType.RECEIVE, new Date(), TransferMSG.SendStatus.COMPLETED,null));
+            listView.getRefreshableView().setAdapter(chatAdapter);
+            chatAdapter.notifyDataSetChanged();
+            listView.onRefreshComplete();
+        }
+    };
 
 //    private void setText(final String text)
 //    {
@@ -288,6 +304,7 @@ public class ChatActivity extends Activity{
         chatGetDataTask = new ChatGetDataTask(chatAdapter, listView);
         chatGetDataTask.execute();
     }
+
     private void hideKeyboard() {
         if (getWindow().getAttributes().softInputMode != WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN) {
             if (getCurrentFocus() != null)
