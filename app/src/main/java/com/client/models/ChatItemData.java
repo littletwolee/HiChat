@@ -13,17 +13,18 @@ public class ChatItemData {
     public ChatItemData() {
     }
 
-    public ChatItemData(String userName, String msg, TransferMSG.TransferType msgType, Date msgDate, TransferMSG.SendStatus msgStatus) {
+    public ChatItemData(String userName, String msg, TransferMSG.TransferType msgType, Date msgDate, TransferMSG.SendStatus msgStatus, byte[] pic) {
         this.UserName = userName;
         this.Msg = msg;
         this.MsgType = msgType;
         this.MsgDate = msgDate;
         this.MsgStatus = msgStatus;
-
+        this.Pic = pic;
     }
     public String UserName;
     public String Msg;
     public TransferMSG.TransferType MsgType;
     public Date MsgDate;
     public TransferMSG.SendStatus MsgStatus;
+    public byte[] Pic;
 }

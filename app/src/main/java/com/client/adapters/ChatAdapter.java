@@ -2,19 +2,15 @@ package com.client.adapters;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.client.enums.TransferMSG;
 import com.client.hichat.R;
-import com.client.hichat.chat.ChatActivity;
-import com.client.models.ChatItem;
 import com.client.models.ChatItemData;
+import com.client.models.ChatMsgItem;
 
 import java.util.List;
 
@@ -54,41 +50,31 @@ public class ChatAdapter extends BaseAdapter {
     //获取一个在数据集中指定索引的视图来显示数据
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        final ChatItem chatItem;
+        final ChatMsgItem chatMsgItem;
         //如果缓存convertView为空，则需要创建View
         if(convertView == null)
         {
             ChatItemData chatItemData = data.get(position);
             if(chatItemData.MsgType == TransferMSG.TransferType.RECEIVE) {
-
+                convertView = mInflater.inflate(R.layout.layout_chat_receive_msg, null);
+            } else {
+                convertView = mInflater.inflate(R.layout.layout_chat_send_msg, null);
             }
-            chatItem = new ChatItem();
             //根据自定义的Item布局加载布局
-            convertView = mInflater.inflate(R.layout.layout_chat_receive_msg, null);
-            chatItem.ChatID = data.get(position).ChatID;
-            chatItem.ChatName = (TextView)convertView.findViewById(R.id.chat_name);
-            chatItem.ChatType = data.get(position).ChatType;
-            chatItem.Pic = (ImageView)convertView.findViewById(R.id.pic);
-            chatItem.Pic.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View arg0) {
-                    Intent intent=new Intent(activity,ChatActivity.class);
-                    intent.putExtra("userid", chatItem.ChatID);
-                    activity.startActivityForResult(intent, 1);
-                }
-            });
-            chatItem.LastMsg = (TextView)convertView.findViewById(R.id.last_msg);
-            //chatItem.setLastTime(data.get(position).LastTime);
+            chatMsgItem = new ChatMsgItem(convertView,chatItemData);
+//            ChatDataItem.Pic.setOnClickListener(new View.OnClickListener(){
+//                @Override
+//                public void onClick(View arg0) {
+//                    Intent intent=new Intent(activity,ChatActivity.class);
+//                    intent.putExtra("userid", chatItem.ChatID);
+//                    activity.startActivityForResult(intent, 1);
+//                }
+//            });
             //将设置好的布局保存到缓存中，并将其设置在Tag里，以便后面方便取出Tag
-            convertView.setTag(chatItem);
-        }else
-        {
-            chatItem = (ChatItem)convertView.getTag();
+            convertView.setTag(chatMsgItem);
+        } else {
+            chatMsgItem = (ChatMsgItem)convertView.getTag();
         }
-        //chatItem.Pic.setBackgroundResource();
-        chatItem.ChatName.setText((String) data.get(position).ChatName);
-        chatItem.LastMsg.setText((String) data.get(position).LastMsg);
-        chatItem.Pic.setImageResource(R.mipmap.ic_launcher);
         return convertView;
     }
 }

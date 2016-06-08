@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.client.hichat.R;
 import com.client.hichat.chat.ChatActivity;
-import com.client.models.ChatItem;
+import com.client.models.ChatsItem;
 import com.client.models.ChatsItemData;
 
 import java.util.List;
@@ -53,37 +53,37 @@ public class ChatsAdapter extends BaseAdapter {
     //获取一个在数据集中指定索引的视图来显示数据
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        final ChatItem chatItem;
+        final ChatsItem chatsItem;
         //如果缓存convertView为空，则需要创建View
         if(convertView == null)
         {
-            chatItem = new ChatItem();
+            chatsItem = new ChatsItem();
             //根据自定义的Item布局加载布局
             convertView = mInflater.inflate(R.layout.chat_list_item, null);
-            chatItem.ChatID = data.get(position).ChatID;
-            chatItem.ChatName = (TextView)convertView.findViewById(R.id.chat_name);
-            chatItem.ChatType = data.get(position).ChatType;
-            chatItem.Pic = (ImageView)convertView.findViewById(R.id.pic);
-            chatItem.Pic.setOnClickListener(new View.OnClickListener(){
+            chatsItem.ChatID = data.get(position).ChatID;
+            chatsItem.ChatName = (TextView)convertView.findViewById(R.id.chat_name);
+            chatsItem.ChatType = data.get(position).ChatType;
+            chatsItem.Pic = (ImageView)convertView.findViewById(R.id.pic);
+            chatsItem.Pic.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View arg0) {
                     Intent intent=new Intent(activity,ChatActivity.class);
-                    intent.putExtra("userid", chatItem.ChatID);
+                    intent.putExtra("userid", chatsItem.ChatID);
                     activity.startActivityForResult(intent, 1);
                 }
             });
-            chatItem.LastMsg = (TextView)convertView.findViewById(R.id.last_msg);
+            chatsItem.LastMsg = (TextView)convertView.findViewById(R.id.last_msg);
             //chatItem.setLastTime(data.get(position).LastTime);
             //将设置好的布局保存到缓存中，并将其设置在Tag里，以便后面方便取出Tag
-            convertView.setTag(chatItem);
+            convertView.setTag(chatsItem);
         }else
         {
-            chatItem = (ChatItem)convertView.getTag();
+            chatsItem = (ChatsItem)convertView.getTag();
         }
         //chatItem.Pic.setBackgroundResource();
-        chatItem.ChatName.setText((String) data.get(position).ChatName);
-        chatItem.LastMsg.setText((String) data.get(position).LastMsg);
-        chatItem.Pic.setImageResource(R.mipmap.ic_launcher);
+        chatsItem.ChatName.setText((String) data.get(position).ChatName);
+        chatsItem.LastMsg.setText((String) data.get(position).LastMsg);
+        chatsItem.Pic.setImageResource(R.mipmap.ic_launcher);
         return convertView;
     }
 

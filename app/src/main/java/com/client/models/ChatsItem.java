@@ -8,10 +8,10 @@ import java.util.Date;
 /**
  * Created by lee on 16-5-23.
  */
-public class ChatItem {
+public class ChatsItem {
 
-    public  ChatItem(){}
-    public ChatItem(String chatID, String chatName, String chatType, byte[] pic, String lastMsg, String lastTime) {
+    public  ChatsItem(){}
+    public ChatsItem(String chatID, String chatName, String chatType, byte[] pic, String lastMsg, String lastTime) {
         this.ChatID = chatID;
         this.ChatName.setText(chatName);
         this.ChatType = chatType;

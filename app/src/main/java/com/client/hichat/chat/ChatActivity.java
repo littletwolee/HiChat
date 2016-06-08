@@ -38,7 +38,7 @@ public class ChatActivity extends Activity{
     private InputMethodManager manager;
     private LinearLayout btnContainer, emojiIconContainer;
     private RelativeLayout edittext_layout;
-    private View buttonSetModeKeyboard, more, buttonSend, buttonPressToSpeak, btnMore, buttonSetModeVoice;
+    private View btnSetModeKeyboard, more, btnSend, btnPressToSpeak, btnMore, btnSetModeVoice;
     private ChatAdapter chatAdapter;
     private ChatGetDataTask chatGetDataTask;
     DBHelper database;
@@ -64,28 +64,26 @@ public class ChatActivity extends Activity{
         emojiIconContainer = (LinearLayout) findViewById(R.id.ll_face_container);
         edittext_layout = (RelativeLayout) findViewById(R.id.edit_text_layout);
         edittext_layout.setBackgroundResource(R.mipmap.input_bar_bg_normal);
-        buttonSetModeKeyboard = findViewById(R.id.btn_set_mode_keyboard);
+        btnSetModeKeyboard = findViewById(R.id.btn_set_mode_keyboard);
         btnMore = findViewById(R.id.btn_more);
-        buttonSend = findViewById(R.id.btn_send);
-        buttonPressToSpeak = findViewById(R.id.btn_press_to_speak);
-        buttonSetModeVoice = findViewById(R.id.btn_set_mode_voice);
+        btnSend = findViewById(R.id.btn_send);
+        btnPressToSpeak = findViewById(R.id.btn_press_to_speak);
+        btnSetModeVoice = findViewById(R.id.btn_set_mode_voice);
         mEditTextContent = (EditText) findViewById(R.id.et_send_message);
         chatAdapter = new ChatAdapter(ChatActivity.this);
         database = new DBHelper(ChatActivity.this);
-        chatGetDataTask = new ChatGetDataTask(chatAdapter, listView);
-        listView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
-            @Override
-            public void onRefresh(PullToRefreshBase<ListView> refreshView) {
-                String label = DateUtils.formatDateTime(ChatActivity.this, System.currentTimeMillis(),
-                        DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_ALL);
-                refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(label);
-                chatGetDataTask.execute();
-            }
-        });
-        chatGetDataTask.execute();
+        refreshListData();
+
+        //
         //add events
+        //
         img_back_main.setOnClickListener(rl_back_click);
         img_user_info.setOnClickListener(img_user_info_click);
+        listView.setOnRefreshListener(listview_refresh);
+        btnSetModeKeyboard.setOnClickListener(btn_SetModeKeyboard_click);
+        btnSetModeVoice.setOnClickListener(btn_SetModeVoice_click);
+        btnMore.setOnClickListener(button_more_click);
+        mEditTextContent.setOnClickListener(et_mEditTextContent_click);
 //        chat_text_list = (EditText)findViewById(R.id.chat_msg_box);
 //        sendmsg = (ImageView)findViewById(R.id.more_type_btn);
 //        chat_msg_list = (LinearLayout)findViewById(R.id.chat_msg_list);
@@ -156,7 +154,10 @@ public class ChatActivity extends Activity{
 //            }
 //        });
     }
-    //add events
+
+    //
+    //handlers
+    //
     View.OnClickListener rl_back_click = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -171,14 +172,23 @@ public class ChatActivity extends Activity{
             ChatActivity.this.startActivityForResult(intent, 1);
         }
     };
+    PullToRefreshBase.OnRefreshListener<ListView> listview_refresh = new PullToRefreshBase.OnRefreshListener<ListView>() {
+        @Override
+        public void onRefresh(PullToRefreshBase<ListView> refreshView) {
+            String label = DateUtils.formatDateTime(ChatActivity.this, System.currentTimeMillis(),
+                    DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_ALL);
+            refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(label);
+            refreshListData();
+        }
+    };
     TextWatcher watcher = new TextWatcher() {
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             if(mEditTextContent.getText().toString().length() > 0){
-                buttonSend.setVisibility(View.VISIBLE);
+                btnSend.setVisibility(View.VISIBLE);
             }else {
-                buttonSend.setVisibility(View.GONE);
+                btnSend.setVisibility(View.GONE);
             }
         }
         @Override
@@ -186,63 +196,97 @@ public class ChatActivity extends Activity{
         @Override
         public void afterTextChanged(Editable s) {}
     };
-    //handlers
-    private void setText(final String text)
-    {
-        runOnUiThread(new Runnable(){
-            public void run() {
-                TextView tv = new TextView(ChatActivity.this);
-                tv.setTextColor(Color.parseColor("#000000"));
-                tv.setText(text);
-                //chat_msg_list.addView(tv);
-            };
-        });
-    }
-    public void editClick(View v) {
-        //listView.setSelection(listView.getCount() - 1);
-        if (more.getVisibility() == View.VISIBLE) {
+    View.OnClickListener btn_SetModeKeyboard_click = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            edittext_layout.setVisibility(View.VISIBLE);
             more.setVisibility(View.GONE);
+            btnSetModeKeyboard.setVisibility(View.GONE);
+            btnSetModeVoice.setVisibility(View.VISIBLE);
+            // mEditTextContent.setVisibility(View.VISIBLE);
+            mEditTextContent.requestFocus();
+            // buttonSend.setVisibility(View.VISIBLE);
+            btnPressToSpeak.setVisibility(View.GONE);
+            if (TextUtils.isEmpty(mEditTextContent.getText())) {
+                btnMore.setVisibility(View.VISIBLE);
+                btnSend.setVisibility(View.GONE);
+            } else {
+                btnMore.setVisibility(View.GONE);
+                btnSend.setVisibility(View.VISIBLE);
+            }
+        }
+    };
+    View.OnClickListener btn_SetModeVoice_click = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            hideKeyboard();
+            edittext_layout.setVisibility(View.GONE);
+            more.setVisibility(View.GONE);
+            btnSetModeVoice.setVisibility(View.GONE);
+            btnSetModeKeyboard.setVisibility(View.VISIBLE);
+            btnSend.setVisibility(View.GONE);
+            btnMore.setVisibility(View.VISIBLE);
+            btnPressToSpeak.setVisibility(View.VISIBLE);
             iv_emoticons_normal.setVisibility(View.VISIBLE);
             iv_emoticons_checked.setVisibility(View.INVISIBLE);
-        }
-
-    }
-
-    public void moreClick(View view) {
-        if (more.getVisibility() == View.GONE) {
-            System.out.println("more gone");
-            hideKeyboard();
-            more.setVisibility(View.VISIBLE);
             btnContainer.setVisibility(View.VISIBLE);
             emojiIconContainer.setVisibility(View.GONE);
-        } else {
-            if (emojiIconContainer.getVisibility() == View.VISIBLE) {
-                emojiIconContainer.setVisibility(View.GONE);
+        }
+    };
+    View.OnClickListener button_more_click = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if (more.getVisibility() == View.GONE) {
+                System.out.println("more gone");
+                hideKeyboard();
+                more.setVisibility(View.VISIBLE);
                 btnContainer.setVisibility(View.VISIBLE);
+                emojiIconContainer.setVisibility(View.GONE);
+            } else {
+                if (emojiIconContainer.getVisibility() == View.VISIBLE) {
+                    emojiIconContainer.setVisibility(View.GONE);
+                    btnContainer.setVisibility(View.VISIBLE);
+                    iv_emoticons_normal.setVisibility(View.VISIBLE);
+                    iv_emoticons_checked.setVisibility(View.INVISIBLE);
+                } else {
+                    more.setVisibility(View.GONE);
+                }
+
+            }
+        }
+    };
+    View.OnClickListener et_mEditTextContent_click = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            //listView.setSelection(listView.getCount() - 1);
+            if (more.getVisibility() == View.VISIBLE) {
+                more.setVisibility(View.GONE);
                 iv_emoticons_normal.setVisibility(View.VISIBLE);
                 iv_emoticons_checked.setVisibility(View.INVISIBLE);
-            } else {
-                more.setVisibility(View.GONE);
             }
-
         }
+    };
 
-    }
+//    private void setText(final String text)
+//    {
+//        runOnUiThread(new Runnable(){
+//            public void run() {
+//                TextView tv = new TextView(ChatActivity.this);
+//                tv.setTextColor(Color.parseColor("#000000"));
+//                tv.setText(text);
+//                //chat_msg_list.addView(tv);
+//            };
+//        });
+//    }
 
-    public void setTypeVoice(View view) {
-        hideKeyboard();
-        edittext_layout.setVisibility(View.GONE);
-        more.setVisibility(View.GONE);
-        view.setVisibility(View.GONE);
-        buttonSetModeKeyboard.setVisibility(View.VISIBLE);
-        buttonSend.setVisibility(View.GONE);
-        btnMore.setVisibility(View.VISIBLE);
-        buttonPressToSpeak.setVisibility(View.VISIBLE);
-        iv_emoticons_normal.setVisibility(View.VISIBLE);
-        iv_emoticons_checked.setVisibility(View.INVISIBLE);
-        btnContainer.setVisibility(View.VISIBLE);
-        emojiIconContainer.setVisibility(View.GONE);
 
+
+    //
+    //internal fun
+    //
+    private void refreshListData(){
+        chatGetDataTask = new ChatGetDataTask(chatAdapter, listView);
+        chatGetDataTask.execute();
     }
     private void hideKeyboard() {
         if (getWindow().getAttributes().softInputMode != WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN) {
@@ -252,22 +296,4 @@ public class ChatActivity extends Activity{
         }
     }
 
-    public void setModeKeyboard(View view) {
-        edittext_layout.setVisibility(View.VISIBLE);
-        more.setVisibility(View.GONE);
-        view.setVisibility(View.GONE);
-        buttonSetModeVoice.setVisibility(View.VISIBLE);
-        // mEditTextContent.setVisibility(View.VISIBLE);
-        mEditTextContent.requestFocus();
-        // buttonSend.setVisibility(View.VISIBLE);
-        buttonPressToSpeak.setVisibility(View.GONE);
-        if (TextUtils.isEmpty(mEditTextContent.getText())) {
-            btnMore.setVisibility(View.VISIBLE);
-            buttonSend.setVisibility(View.GONE);
-        } else {
-            btnMore.setVisibility(View.GONE);
-            buttonSend.setVisibility(View.VISIBLE);
-        }
-
-    }
 }
