@@ -1,10 +1,12 @@
 package com.client.tasks;
 
 import android.os.AsyncTask;
+
 import com.client.adapters.ChatAdapter;
 import com.client.enums.TransferMSG;
 import com.client.models.ChatItemData;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -23,10 +25,10 @@ public class ChatGetDataTask extends AsyncTask<Void, Void, List<ChatItemData>> {
     protected List<ChatItemData> doInBackground(Void... params) {
         List<ChatItemData> chatList = new ArrayList<ChatItemData>();
         ChatItemData chatItemData;
-        for (int i = 1; i <= 5; i++) {
+        for (int i = 1; i <= 10; i++) {
             chatItemData = new ChatItemData();
             if(i % 2 == 0) {
-                chatItemData.Msg = String.valueOf(i);;
+                chatItemData.Msg = String.valueOf(i);
                 chatItemData.MsgType = TransferMSG.TransferType.SEND;
                 chatItemData.MsgDate = new Date();
                 if(i % 4 == 0){

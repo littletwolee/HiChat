@@ -24,7 +24,7 @@ public class ChatsGetDataTask extends AsyncTask<Void, Void, List<ChatsItemData>>
     protected List<ChatsItemData> doInBackground(Void... params) {
         List<ChatsItemData> chatList = new ArrayList<ChatsItemData>();
         for (int i = 1; i <= 20; i++) {
-            chatList.add(new ChatsItemData(String.valueOf(i), "line"+String.valueOf(i), "friend", null, "hahahah", (new Date()).toString()));
+            chatList.add(new ChatsItemData(String.valueOf(i), "line"+String.valueOf(i), "friend", null, String.valueOf(i), (new Date()).toString()));
         }
         return chatList;
     }
