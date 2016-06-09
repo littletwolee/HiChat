@@ -25,7 +25,7 @@ public class ChatGetDataTask extends AsyncTask<Void, Void, List<ChatItemData>> {
     protected List<ChatItemData> doInBackground(Void... params) {
         List<ChatItemData> chatList = new ArrayList<ChatItemData>();
         ChatItemData chatItemData;
-        for (int i = 1; i <= 10; i++) {
+        for (int i = 1; i <= 20; i++) {
             chatItemData = new ChatItemData();
             if(i % 2 == 0) {
                 chatItemData.Msg = String.valueOf(i);

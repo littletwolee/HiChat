@@ -7,12 +7,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
-import com.client.enums.TransferMSG;
 import com.client.hichat.R;
 import com.client.models.ChatItemData;
-import com.client.models.ChatMsgItem;
+import com.client.models.ChatMsgReceiveItem;
+import com.client.models.ChatMsgSendItem;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by lee on 16-6-4.
@@ -21,12 +23,17 @@ public class ChatAdapter extends BaseAdapter {
     private LayoutInflater mInflater = null;
     private Activity activity = null;
     public List<ChatItemData> data;
+    private static Map mapView;
+    private static final int SEND = 0;
+    private static final int RECEIVE = 1;
     public ChatAdapter(Context context)
     {
         //根据context上下文加载布局，这里的是Demo17Activity本身，即this
         this.mInflater = LayoutInflater.from(context);
         this.activity = (Activity)context;
+        this.mapView = new HashMap();
     }
+
     @Override
     public int getCount() {
         //How many items are in the data set represented by this Adapter.
@@ -45,38 +52,51 @@ public class ChatAdapter extends BaseAdapter {
         //获取在列表中与指定索引对应的行id
         return position;
     }
+    @Override
+    public int getItemViewType(int position) {
+
+        ChatItemData chatItemData = data.get(position);
+        int type = chatItemData.MsgType.ordinal();
+        return type;
+    }
+    @Override
+    public int getViewTypeCount() {
+        return 2;
+    }
 
     //Get a View that displays the data at the specified position in the data set.
     //获取一个在数据集中指定索引的视图来显示数据
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ChatMsgItem chatMsgItem;
-        ChatItemData chatItemData = data.get(position);
-        ;
+        ChatMsgReceiveItem chatMsgReceiveItem = null;
+        ChatMsgSendItem chatMsgSendItem = null;
+        ChatItemData chatItemData = (ChatItemData)getItem(position);
+        int type = getItemViewType(position);
         //如果缓存convertView为空，则需要创建View
-        if(chatItemData.MsgType == TransferMSG.TransferType.RECEIVE){}
-        if(null == convertView){
-            if(chatItemData.MsgType == TransferMSG.TransferType.RECEIVE) {
-                convertView = mInflater.inflate(R.layout.layout_chat_receive_msg, null);
-            } else {
-                convertView = mInflater.inflate(R.layout.layout_chat_send_msg, null);
-            }
-            //根据自定义的Item布局加载布局
-            chatMsgItem = new ChatMsgItem(convertView, chatItemData.MsgType);
-//            ChatDataItem.Pic.setOnClickListener(new View.OnClickListener(){
-//                @Override
-//                public void onClick(View arg0) {
-//                    Intent intent=new Intent(activity,ChatActivity.class);
-//                    intent.putExtra("userid", chatItem.ChatID);
-//                    activity.startActivityForResult(intent, 1);
-//                }
-//            });
-            //将设置好的布局保存到缓存中，并将其设置在Tag里，以便后面方便取出Tag
-            convertView.setTag(chatMsgItem);
-        } else {
-            chatMsgItem = (ChatMsgItem)convertView.getTag();
+        switch (type) {
+            case SEND:
+                if(null == convertView){
+                    convertView = mInflater.inflate(R.layout.layout_chat_send_msg, null);
+                    chatMsgSendItem = new ChatMsgSendItem(convertView);
+                    convertView.setTag(chatMsgSendItem);
+                } else {
+                    chatMsgSendItem = (ChatMsgSendItem)convertView.getTag();
+                }
+                chatMsgSendItem.setObject(chatMsgSendItem, chatItemData);
+                break;
+            case RECEIVE:
+                if(null == convertView){
+                    convertView = mInflater.inflate(R.layout.layout_chat_receive_msg, null);
+                    chatMsgReceiveItem = new ChatMsgReceiveItem(convertView);
+                    convertView.setTag(chatMsgReceiveItem);
+                } else {
+                    chatMsgReceiveItem = (ChatMsgReceiveItem)convertView.getTag();
+                }
+                chatMsgReceiveItem.setObject(chatMsgReceiveItem, chatItemData);
+                break;
+            default:
+                break;
         }
-        chatMsgItem.setObject(chatMsgItem, chatItemData);
         return convertView;
     }
 }
