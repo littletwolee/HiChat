@@ -275,9 +275,10 @@ public class ChatActivity extends Activity{
         public void onClick(View v) {
             chatAdapter.data.add(new ChatItemData("me","5555",
                     TransferMSG.TransferType.RECEIVE, new Date(), TransferMSG.SendStatus.COMPLETED,null));
-            listView.getRefreshableView().setAdapter(chatAdapter);
+            //listView.getRefreshableView().setAdapter(chatAdapter);
             chatAdapter.notifyDataSetChanged();
             listView.onRefreshComplete();
+            listView.getRefreshableView().smoothScrollByOffset(listView.getBottom());
         }
     };
 
