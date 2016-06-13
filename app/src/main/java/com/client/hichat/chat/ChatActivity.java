@@ -88,36 +88,7 @@ public class ChatActivity extends Activity{
         mEditTextContent.setOnClickListener(et_mEditTextContent_click);
         mEditTextContent.addTextChangedListener(watcher);
         btnSend.setOnClickListener(btn_Send_click);
-//        chat_text_list = (EditText)findViewById(R.id.chat_msg_box);
-//        sendmsg = (ImageView)findViewById(R.id.more_type_btn);
-//        chat_msg_list = (LinearLayout)findViewById(R.id.chat_msg_list);
-//        String ip = "10.157.193.27";
-//
-//
-//        XMPPTCPConnectionConfiguration.Builder configBuilder = XMPPTCPConnectionConfiguration.builder();
-//
-//        configBuilder.setHost(ip);
-//        configBuilder.setPort(5222);
-//        configBuilder.setServiceName(ip);
-//        final AbstractXMPPConnection connection =
-//                new XMPPTCPConnection(configBuilder.build());
-//        new Thread(new Runnable(){
-//            @Override
-//            public void run() {
-//                try {
-//                    //Thread.sleep(3000);
-//                    connection.connect();
-//                    connection.login("user2", "123456");
-//                    Presence presence = new Presence(Presence.Type.available);
-//                    presence.setStatus("I am online");
-//                    connection.sendStanza(presence);
-//                    setText("connected server");
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }).start();
-//
+
 //        final ChatManager cm = ChatManager.getInstanceFor(connection);
 //
 //        sendmsg.setOnClickListener(new View.OnClickListener() {

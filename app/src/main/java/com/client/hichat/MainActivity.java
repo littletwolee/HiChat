@@ -16,6 +16,7 @@ import com.client.models.DaoSession;
 import com.client.models.User;
 import com.client.models.UserDao;
 import com.client.moudles.UserHelper;
+import com.client.tools.ChatConnectionBase;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -39,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         userHelper = new UserHelper(MainActivity.this);
-        if(userHelper.isAuth()){
+//        if(userHelper.isAuth()){
             setContentView(R.layout.activity_main);
             fragments.add(new ChatsFragment());
             fragments.add(new ContactsFragment());
@@ -60,11 +61,11 @@ public class MainActivity extends AppCompatActivity {
                         }
 
                     });
-        }else {
-            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-            this.startActivity(intent);
-        }
-
+//        }else {
+//            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+//            this.startActivity(intent);
+//        }
+        connectServer();
     }
     @Override
     public void onAttachFragment(Fragment fragment) {
@@ -96,6 +97,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void connectServer(){
+        ChatConnectionBase.getInstance(this.getApplicationContext()).ChatConnect();
     }
 }
 
