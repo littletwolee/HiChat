@@ -1,6 +1,5 @@
 package com.client.hichat;
 
-import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,21 +9,15 @@ import android.view.MenuItem;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
-import com.client.hichat.user.LoginActivity;
 import com.client.models.DaoMaster;
 import com.client.models.DaoSession;
-import com.client.models.User;
 import com.client.models.UserDao;
 import com.client.moudles.UserHelper;
 import com.client.tools.ChatConnectionBase;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-
-import de.greenrobot.dao.query.Query;
-import de.greenrobot.dao.query.QueryBuilder;
 
 public class MainActivity extends AppCompatActivity {
     private RadioGroup rgs;
@@ -100,7 +93,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void connectServer(){
-        ChatConnectionBase.getInstance(this.getApplicationContext()).ChatConnect();
+        ChatConnectionBase chatConnectionBase = ChatConnectionBase.getInstance();
+        chatConnectionBase.Init(chatConnectionBase, this);
+        chatConnectionBase.ChatConnect();
     }
 }
 

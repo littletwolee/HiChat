@@ -23,18 +23,23 @@ import com.client.hichat.R;
 import com.client.hichat.user.UserInfoActivity;
 import com.client.models.ChatItemData;
 import com.client.tasks.ChatGetDataTask;
+import com.client.tasks.ChatMsgTask;
+import com.client.tools.ChatConnectionBase;
 import com.client.tools.DBHelper;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 import org.jivesoftware.smack.chat.Chat;
+import org.jivesoftware.smack.chat.ChatManager;
+import org.jivesoftware.smack.chat.ChatManagerListener;
+import org.jivesoftware.smack.chat.ChatMessageListener;
+import org.jivesoftware.smack.packet.Message;
 
 import java.util.Date;
 
 
 public class ChatActivity extends Activity{
     private EditText mEditTextContent;
-    private Chat topChat;
     private PullToRefreshListView listView;
     private ImageView iv_emoticons_normal, img_user_info, img_back_main, iv_emoticons_checked;
     private InputMethodManager manager;
@@ -43,7 +48,10 @@ public class ChatActivity extends Activity{
     private View btnSetModeKeyboard, more, btnSend, btnPressToSpeak, btnMore, btnSetModeVoice;
     private ChatAdapter chatAdapter;
     private ChatGetDataTask chatGetDataTask;
-    DBHelper database;
+    private ChatConnectionBase chatConnectionBase;
+    private DBHelper database;
+    private static ChatManager cm;
+    private Chat topChat;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,46 +96,11 @@ public class ChatActivity extends Activity{
         mEditTextContent.setOnClickListener(et_mEditTextContent_click);
         mEditTextContent.addTextChangedListener(watcher);
         btnSend.setOnClickListener(btn_Send_click);
-
-//        final ChatManager cm = ChatManager.getInstanceFor(connection);
-//
-//        sendmsg.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View arg0) {
-//                try {
-//                    String text = (String)chat_text_list.getText().toString();
-//                    topChat.sendMessage(text);
-//                    setText(text);
-//                } catch (SmackException.NotConnectedException e) {
-//                    // TODO Auto-generated catch block
-//                    e.printStackTrace();
-//                }
-//            }
-//        });
-//        topChat = cm.createChat("user1@"+ip, new ChatMessageListener() {
-//
-//            public void processMessage(Chat chat, Message message){
-//                System.out.println("Received message: " + message);
-//            }
-//        });
-//        cm.addChatListener(new ChatManagerListener(){
-//
-//            @Override
-//            public void chatCreated(Chat arg0, boolean arg1) {
-//                arg0.addMessageListener(new ChatMessageListener(){
-//
-//                    @Override
-//                    public void processMessage(Chat arg0, Message arg1) {
-//                        topChat = arg0;
-//                        if(null!=arg1.getBody())
-//                        {
-//                            String from = arg1.getFrom().substring(0,arg1.getFrom().indexOf("@"));
-//                            setText("from "+from+" : "+arg1.getBody());
-//                        }
-//                    }
-//                });
-//            }
-//        });
+        //init chat connection
+        chatConnectionBase = ChatConnectionBase.getInstance();
+        cm = ChatManager.getInstanceFor(chatConnectionBase.Connection);
+        cm.addChatListener(chatManagerListener);
+        topChat = cm.createChat("user2@"+getString(R.string.xmpp_domain), chatMessageListener);
     }
 
     //
@@ -244,15 +217,47 @@ public class ChatActivity extends Activity{
     View.OnClickListener btn_Send_click = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            chatAdapter.data.add(new ChatItemData("me","5555",
-                    TransferMSG.TransferType.RECEIVE, new Date(), TransferMSG.SendStatus.COMPLETED,null));
-            //listView.getRefreshableView().setAdapter(chatAdapter);
+            String msg = mEditTextContent.getText().toString();
+            Integer chatid = chatAdapter.data.size();
+            ChatItemData senddata = new ChatItemData(chatid, "me", msg,
+                    TransferMSG.TransferType.SEND, new Date(), TransferMSG.SendStatus.SENDING, null);
+            chatAdapter.data.put(chatid, senddata);
             chatAdapter.notifyDataSetChanged();
             listView.onRefreshComplete();
             listView.getRefreshableView().smoothScrollByOffset(listView.getBottom());
+            ChatMsgTask chatMsgTask = new ChatMsgTask();
+            chatMsgTask.chatAdapter = chatAdapter;
+            chatMsgTask.topChat = topChat;
+            chatMsgTask.chatItemData = senddata;
+            chatMsgTask.listView = listView;
+            chatMsgTask.execute();
         }
     };
-
+    ChatMessageListener chatMessageListener = new ChatMessageListener(){
+        public void processMessage(Chat chat, Message message){
+            System.out.println("Received message: " + message);
+        }
+    };
+    ChatManagerListener chatManagerListener = new ChatManagerListener() {
+        @Override
+        public void chatCreated(Chat chat, boolean result) {
+            chat.addMessageListener(new ChatMessageListener(){
+                @Override
+                public void processMessage(Chat chat, Message msg) {
+                    topChat = chat;
+                    if(null!=msg.getBody())
+                    {
+                        Integer chatid = chatAdapter.data.size();
+                        chatAdapter.data.put(chatid, new ChatItemData(chatid, "user2", msg.getBody(),
+                                TransferMSG.TransferType.RECEIVE, new Date(), null, null));
+                        chatAdapter.notifyDataSetChanged();
+                        listView.onRefreshComplete();
+                        listView.getRefreshableView().smoothScrollByOffset(listView.getBottom());
+                    }
+                }
+            });
+        }
+    };
 //    private void setText(final String text)
 //    {
 //        runOnUiThread(new Runnable(){

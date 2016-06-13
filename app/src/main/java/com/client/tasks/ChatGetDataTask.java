@@ -7,14 +7,14 @@ import com.client.enums.TransferMSG;
 import com.client.models.ChatItemData;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by lee on 16-6-5.
  */
-public class ChatGetDataTask extends AsyncTask<Void, Void, List<ChatItemData>> {
+public class ChatGetDataTask extends AsyncTask<Void, Void, Map<Integer, ChatItemData>> {
     private ChatAdapter chatAdapter;
     private PullToRefreshListView listView;
     public ChatGetDataTask(ChatAdapter chatAdapter, PullToRefreshListView listView){
@@ -22,13 +22,14 @@ public class ChatGetDataTask extends AsyncTask<Void, Void, List<ChatItemData>> {
         this.listView = listView;
     }
     @Override
-    protected List<ChatItemData> doInBackground(Void... params) {
-        List<ChatItemData> chatList = new ArrayList<ChatItemData>();
+    protected Map<Integer, ChatItemData> doInBackground(Void... params) {
+        Map<Integer, ChatItemData> chatList = new HashMap<>();
         ChatItemData chatItemData;
-        for (int i = 1; i <= 20; i++) {
+        for (int i = 0; i <= 20; i++) {
             chatItemData = new ChatItemData();
+            chatItemData.ChatID = i;
             if(i % 2 == 0) {
-                chatItemData.Msg = String.valueOf(i);
+                chatItemData.Msg = "s" + String.valueOf(i);
                 chatItemData.MsgType = TransferMSG.TransferType.SEND;
                 chatItemData.MsgDate = new Date();
                 if(i % 4 == 0){
@@ -38,17 +39,17 @@ public class ChatGetDataTask extends AsyncTask<Void, Void, List<ChatItemData>> {
                 }
                 chatItemData.UserName = "me";
             } else {
-                chatItemData.Msg = String.valueOf(i);
+                chatItemData.Msg = "r" + String.valueOf(i);
                 chatItemData.MsgType = TransferMSG.TransferType.RECEIVE;
                 chatItemData.MsgDate = new Date();
                 chatItemData.UserName = "friend";
             }
-            chatList.add(chatItemData);
+            chatList.put(i, chatItemData);
         }
         return chatList;
     }
     @Override
-    protected void onPostExecute(List<ChatItemData> result) {
+    protected void onPostExecute(Map<Integer, ChatItemData> result) {
         chatAdapter.data = result;
         listView.getRefreshableView().setAdapter(chatAdapter);
         chatAdapter.notifyDataSetChanged();

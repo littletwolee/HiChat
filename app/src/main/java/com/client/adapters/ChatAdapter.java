@@ -13,7 +13,6 @@ import com.client.models.ChatMsgReceiveItem;
 import com.client.models.ChatMsgSendItem;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -22,7 +21,7 @@ import java.util.Map;
 public class ChatAdapter extends BaseAdapter {
     private LayoutInflater mInflater = null;
     private Activity activity = null;
-    public List<ChatItemData> data;
+    public Map<Integer, ChatItemData> data;
     private static Map mapView;
     private static final int SEND = 0;
     private static final int RECEIVE = 1;
