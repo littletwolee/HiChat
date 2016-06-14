@@ -23,7 +23,8 @@ import com.client.hichat.R;
 import com.client.hichat.user.UserInfoActivity;
 import com.client.models.ChatItemData;
 import com.client.tasks.ChatGetDataTask;
-import com.client.tasks.ChatMsgTask;
+import com.client.tasks.ChatReceiveMsgTask;
+import com.client.tasks.ChatSendMsgTask;
 import com.client.tools.ChatConnectionBase;
 import com.client.tools.DBHelper;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
@@ -225,12 +226,12 @@ public class ChatActivity extends Activity{
             chatAdapter.notifyDataSetChanged();
             listView.onRefreshComplete();
             listView.getRefreshableView().smoothScrollByOffset(listView.getBottom());
-            ChatMsgTask chatMsgTask = new ChatMsgTask();
-            chatMsgTask.chatAdapter = chatAdapter;
-            chatMsgTask.topChat = topChat;
-            chatMsgTask.chatItemData = senddata;
-            chatMsgTask.listView = listView;
-            chatMsgTask.execute();
+            ChatSendMsgTask chatSendMsgTask = new ChatSendMsgTask();
+            chatSendMsgTask.chatAdapter = chatAdapter;
+            chatSendMsgTask.topChat = topChat;
+            chatSendMsgTask.chatItemData = senddata;
+            chatSendMsgTask.listView = listView;
+            chatSendMsgTask.execute();
         }
     };
     ChatMessageListener chatMessageListener = new ChatMessageListener(){
@@ -247,12 +248,12 @@ public class ChatActivity extends Activity{
                     topChat = chat;
                     if(null!=msg.getBody())
                     {
-                        Integer chatid = chatAdapter.data.size();
-                        chatAdapter.data.put(chatid, new ChatItemData(chatid, "user2", msg.getBody(),
-                                TransferMSG.TransferType.RECEIVE, new Date(), null, null));
-                        chatAdapter.notifyDataSetChanged();
-                        listView.onRefreshComplete();
-                        listView.getRefreshableView().smoothScrollByOffset(listView.getBottom());
+                        ChatReceiveMsgTask chatReceiveMsgTask = new ChatReceiveMsgTask();
+                        chatReceiveMsgTask.chatAdapter = chatAdapter;
+                        chatReceiveMsgTask.listView = listView;
+                        chatReceiveMsgTask.chatItemData = new ChatItemData(chatAdapter.data.size(), "user2", msg.getBody(),
+                                TransferMSG.TransferType.RECEIVE, new Date(), null, null);
+                        chatReceiveMsgTask.execute();
                     }
                 }
             });

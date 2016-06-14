@@ -13,7 +13,7 @@ import org.jivesoftware.smack.chat.Chat;
 /**
  * Created by lee on 16-6-13.
  */
-public class ChatMsgTask extends AsyncTask<Void, Void, Boolean> {
+public class ChatSendMsgTask extends AsyncTask<Void, Void, Boolean> {
     public ChatAdapter chatAdapter;
     public ChatItemData chatItemData;
     public PullToRefreshListView listView;

@@ -5,6 +5,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.client.enums.TransferMSG;
 import com.client.hichat.R;
 
 import java.util.Date;
@@ -24,7 +25,7 @@ public class ChatMsgSendItem {
         this.MsgDate = (TextView) view.findViewById(R.id.timestamp);
     }
     private void setData(ChatMsgSendItem chatMsgItem, ChatItemData chatItemData){
-        chatMsgItem.isSending(true);
+        chatMsgItem.isSending(chatItemData.MsgStatus);
         chatMsgItem.setMsg(chatItemData.Msg);
         chatMsgItem.setPic(chatItemData.Pic);
         chatMsgItem.setMsgDate(chatItemData.MsgDate);
@@ -42,8 +43,8 @@ public class ChatMsgSendItem {
     public void setPic(byte[] pic) {
         this.Pic.setImageResource(android.R.mipmap.sym_def_app_icon);
     }
-    public void isSending(boolean issending) {
-        if(issending){
+    public void isSending(TransferMSG.SendStatus issending) {
+        if(issending == TransferMSG.SendStatus.COMPLETED){
             this.Sending.setVisibility(View.GONE);
         }
     }
