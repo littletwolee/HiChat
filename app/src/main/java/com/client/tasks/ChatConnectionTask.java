@@ -17,7 +17,7 @@ public class ChatConnectionTask extends AsyncTask<AbstractXMPPConnection, Void, 
         boolean flag = false;
         try {
             connection.connect();
-            connection.login("user1", "123456");
+            connection.login("user2", "123456");
             flag = true;
         }catch (Exception e){
 

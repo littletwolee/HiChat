@@ -25,7 +25,6 @@ import com.client.hichat.R;
 import com.client.hichat.user.UserInfoActivity;
 import com.client.models.ChatItemData;
 import com.client.models.ChatMsg;
-import com.client.models.JsonResult;
 import com.client.tasks.ChatGetDataTask;
 import com.client.tasks.ChatReceiveMsgTask;
 import com.client.tasks.ChatSendMsgTask;
@@ -40,6 +39,7 @@ import org.jivesoftware.smack.chat.ChatManagerListener;
 import org.jivesoftware.smack.chat.ChatMessageListener;
 import org.jivesoftware.smack.packet.Message;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
 
 
@@ -106,7 +106,7 @@ public class ChatActivity extends Activity{
         chatConnectionBase = ChatConnectionBase.getInstance();
         cm = ChatManager.getInstanceFor(chatConnectionBase.Connection);
         cm.addChatListener(chatManagerListener);
-        topChat = cm.createChat("user2@"+getString(R.string.xmpp_domain), chatMessageListener);
+        topChat = cm.createChat("user1@"+getString(R.string.xmpp_domain), chatMessageListener);
     }
 
     //
@@ -225,8 +225,13 @@ public class ChatActivity extends Activity{
         public void onClick(View v) {
             String msg = mEditTextContent.getText().toString();
             long chatid = chatAdapter.data.size();
-            ChatMsg chatMsg = new ChatMsg("me", "user2", new Date(),
-                    MsgType.Text.getValue(), msg.getBytes());
+            ChatMsg chatMsg = null;
+            try {
+                chatMsg = new ChatMsg("me", "user1", new Date(),
+                        MsgType.Text.getValue(), msg.getBytes("UTF8"));
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
             ChatItemData senddata = new ChatItemData(chatid, "me", JSON.toJSONString(chatMsg),
                     TransferMSG.TransferType.SEND, new Date(), TransferMSG.SendStatus.SENDING, null);
             chatAdapter.data.put(chatid, senddata);
@@ -258,11 +263,11 @@ public class ChatActivity extends Activity{
                         ChatReceiveMsgTask chatReceiveMsgTask = new ChatReceiveMsgTask();
                         chatReceiveMsgTask.chatAdapter = chatAdapter;
                         chatReceiveMsgTask.listView = listView;
-                        ChatMsg chatMsg = (ChatMsg)JSON.parse(msg.getBody());
-                        long id = System.currentTimeMillis();
+                        ChatMsg chatMsg = JSON.parseObject(msg.getBody(), ChatMsg.class);
+                        long id = chatAdapter.data.size();
                         String msgbody = null;
                         try{
-                            msgbody = new String(chatMsg.getMsgbody(), "GB2312");
+                            msgbody = new String(chatMsg.getMsgbody(), "UTF8");
                         }catch (Exception e){
 
                         }
