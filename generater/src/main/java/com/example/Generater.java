@@ -21,9 +21,18 @@ public class Generater {
     private static void addUser(Schema schema) {
         Entity user = schema.addEntity("User");
         user.addIdProperty();
-        user.addStringProperty("username").notNull();
-        user.addStringProperty("password").notNull();
-        user.addBooleanProperty("isLogin").notNull();
-        user.addDateProperty("lastlogin").notNull();
+        user.addStringProperty("UserName").notNull();
+        user.addStringProperty("PassWord").notNull();
+        user.addBooleanProperty("IsLogin").notNull();
+        user.addDateProperty("LastLogin").notNull();
+    }
+    private static void addChatMsg(Schema schema) {
+        Entity chatMsg = schema.addEntity("ChatMsg");
+        chatMsg.addIdProperty();
+        chatMsg.addStringProperty("FromUser").notNull();
+        chatMsg.addStringProperty("ToUser").notNull();
+        chatMsg.addDateProperty("MsgDate").notNull();
+        chatMsg.addStringProperty("MsgType").notNull();
+        chatMsg.addByteProperty("MsgBody").notNull();
     }
 }

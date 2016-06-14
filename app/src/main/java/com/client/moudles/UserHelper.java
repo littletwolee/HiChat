@@ -32,7 +32,7 @@ public class UserHelper extends DBHelper {
     public User findUser(String username){
         user = null;
         List<com.client.models.User> users = userDao.queryBuilder()
-                .where(UserDao.Properties.Username.eq(username)).build().list();
+                .where(UserDao.Properties.UserName.eq(username)).build().list();
         if(users != null && users.size() > 0){
             user = users.get(0);
         }
@@ -40,7 +40,7 @@ public class UserHelper extends DBHelper {
     }
     public boolean login(User user){
         boolean flag = false;
-        if(userDao.queryBuilder().where(UserDao.Properties.Username.eq(user.getUsername())).buildCount().count() > 0){
+        if(userDao.queryBuilder().where(UserDao.Properties.UserName.eq(user.getUserName())).buildCount().count() > 0){
             userDao.update(user);
             flag = true;
         }else {
