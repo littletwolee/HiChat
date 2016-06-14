@@ -14,7 +14,7 @@ import java.util.Map;
 /**
  * Created by lee on 16-6-5.
  */
-public class ChatGetDataTask extends AsyncTask<Void, Void, Map<Integer, ChatItemData>> {
+public class ChatGetDataTask extends AsyncTask<Void, Void, Map<Long, ChatItemData>> {
     private ChatAdapter chatAdapter;
     private PullToRefreshListView listView;
     public ChatGetDataTask(ChatAdapter chatAdapter, PullToRefreshListView listView){
@@ -22,15 +22,15 @@ public class ChatGetDataTask extends AsyncTask<Void, Void, Map<Integer, ChatItem
         this.listView = listView;
     }
     @Override
-    protected Map<Integer, ChatItemData> doInBackground(Void... params) {
-        Map<Integer, ChatItemData> chatList = new HashMap<>();
+    protected Map<Long, ChatItemData> doInBackground(Void... params) {
+        Map<Long, ChatItemData> chatList = new HashMap<>();
         ChatItemData chatItemData;
-        for (int i = 0; i <= 20; i++) {
+        for (long i = 0; i <= 20; i++) {
             chatItemData = new ChatItemData();
             chatItemData.ChatID = i;
             if(i % 2 == 0) {
                 chatItemData.Msg = "s" + String.valueOf(i);
-                chatItemData.MsgType = TransferMSG.TransferType.SEND;
+                chatItemData.MsgSwapType = TransferMSG.TransferType.SEND;
                 chatItemData.MsgDate = new Date();
                 if(i % 4 == 0){
                     chatItemData.MsgStatus = TransferMSG.SendStatus.COMPLETED;
@@ -40,7 +40,7 @@ public class ChatGetDataTask extends AsyncTask<Void, Void, Map<Integer, ChatItem
                 chatItemData.UserName = "me";
             } else {
                 chatItemData.Msg = "r" + String.valueOf(i);
-                chatItemData.MsgType = TransferMSG.TransferType.RECEIVE;
+                chatItemData.MsgSwapType = TransferMSG.TransferType.RECEIVE;
                 chatItemData.MsgDate = new Date();
                 chatItemData.UserName = "friend";
             }
@@ -49,7 +49,7 @@ public class ChatGetDataTask extends AsyncTask<Void, Void, Map<Integer, ChatItem
         return chatList;
     }
     @Override
-    protected void onPostExecute(Map<Integer, ChatItemData> result) {
+    protected void onPostExecute(Map<Long, ChatItemData> result) {
         chatAdapter.data = result;
         listView.getRefreshableView().setAdapter(chatAdapter);
         chatAdapter.notifyDataSetChanged();

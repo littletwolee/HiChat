@@ -14,7 +14,7 @@ import com.client.models.ChatMsg;
 /** 
  * DAO for table "CHAT_MSG".
 */
-public class ChatMsgDao extends AbstractDao<ChatMsg, Long> {
+public class ChatMsgDao extends AbstractDao<ChatMsg, Void> {
 
     public static final String TABLENAME = "CHAT_MSG";
 
@@ -23,12 +23,11 @@ public class ChatMsgDao extends AbstractDao<ChatMsg, Long> {
      * Can be used for QueryBuilder and for referencing column names.
     */
     public static class Properties {
-        public final static Property Id = new Property(0, Long.class, "id", true, "_id");
-        public final static Property FromUser = new Property(1, String.class, "FromUser", false, "FROM_USER");
-        public final static Property ToUser = new Property(2, String.class, "ToUser", false, "TO_USER");
-        public final static Property MsgDate = new Property(3, java.util.Date.class, "MsgDate", false, "MSG_DATE");
-        public final static Property MsgType = new Property(4, String.class, "MsgType", false, "MSG_TYPE");
-        public final static Property MsgBody = new Property(5, byte.class, "MsgBody", false, "MSG_BODY");
+        public final static Property Fromuser = new Property(0, String.class, "Fromuser", false, "FROMUSER");
+        public final static Property Touser = new Property(1, String.class, "Touser", false, "TOUSER");
+        public final static Property Msgdate = new Property(2, java.util.Date.class, "Msgdate", false, "MSGDATE");
+        public final static Property Msgtype = new Property(3, int.class, "Msgtype", false, "MSGTYPE");
+        public final static Property Msgbody = new Property(4, byte[].class, "Msgbody", false, "MSGBODY");
     };
 
 
@@ -44,12 +43,11 @@ public class ChatMsgDao extends AbstractDao<ChatMsg, Long> {
     public static void createTable(SQLiteDatabase db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"CHAT_MSG\" (" + //
-                "\"_id\" INTEGER PRIMARY KEY ," + // 0: id
-                "\"FROM_USER\" TEXT NOT NULL ," + // 1: FromUser
-                "\"TO_USER\" TEXT NOT NULL ," + // 2: ToUser
-                "\"MSG_DATE\" INTEGER NOT NULL ," + // 3: MsgDate
-                "\"MSG_TYPE\" TEXT NOT NULL ," + // 4: MsgType
-                "\"MSG_BODY\" INTEGER NOT NULL );"); // 5: MsgBody
+                "\"FROMUSER\" TEXT NOT NULL ," + // 0: Fromuser
+                "\"TOUSER\" TEXT NOT NULL ," + // 1: Touser
+                "\"MSGDATE\" INTEGER NOT NULL ," + // 2: Msgdate
+                "\"MSGTYPE\" INTEGER NOT NULL ," + // 3: Msgtype
+                "\"MSGBODY\" BLOB NOT NULL );"); // 4: Msgbody
     }
 
     /** Drops the underlying database table. */
@@ -62,34 +60,28 @@ public class ChatMsgDao extends AbstractDao<ChatMsg, Long> {
     @Override
     protected void bindValues(SQLiteStatement stmt, ChatMsg entity) {
         stmt.clearBindings();
- 
-        Long id = entity.getId();
-        if (id != null) {
-            stmt.bindLong(1, id);
-        }
-        stmt.bindString(2, entity.getFromUser());
-        stmt.bindString(3, entity.getToUser());
-        stmt.bindLong(4, entity.getMsgDate().getTime());
-        stmt.bindString(5, entity.getMsgType());
-        stmt.bindLong(6, entity.getMsgBody());
+        stmt.bindString(1, entity.getFromuser());
+        stmt.bindString(2, entity.getTouser());
+        stmt.bindLong(3, entity.getMsgdate().getTime());
+        stmt.bindLong(4, entity.getMsgtype());
+        stmt.bindBlob(5, entity.getMsgbody());
     }
 
     /** @inheritdoc */
     @Override
-    public Long readKey(Cursor cursor, int offset) {
-        return cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0);
+    public Void readKey(Cursor cursor, int offset) {
+        return null;
     }    
 
     /** @inheritdoc */
     @Override
     public ChatMsg readEntity(Cursor cursor, int offset) {
         ChatMsg entity = new ChatMsg( //
-            cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
-            cursor.getString(offset + 1), // FromUser
-            cursor.getString(offset + 2), // ToUser
-            new java.util.Date(cursor.getLong(offset + 3)), // MsgDate
-            cursor.getString(offset + 4), // MsgType
-            (byte) cursor.getShort(offset + 5) // MsgBody
+            cursor.getString(offset + 0), // Fromuser
+            cursor.getString(offset + 1), // Touser
+            new java.util.Date(cursor.getLong(offset + 2)), // Msgdate
+            cursor.getInt(offset + 3), // Msgtype
+            cursor.getBlob(offset + 4) // Msgbody
         );
         return entity;
     }
@@ -97,29 +89,24 @@ public class ChatMsgDao extends AbstractDao<ChatMsg, Long> {
     /** @inheritdoc */
     @Override
     public void readEntity(Cursor cursor, ChatMsg entity, int offset) {
-        entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
-        entity.setFromUser(cursor.getString(offset + 1));
-        entity.setToUser(cursor.getString(offset + 2));
-        entity.setMsgDate(new java.util.Date(cursor.getLong(offset + 3)));
-        entity.setMsgType(cursor.getString(offset + 4));
-        entity.setMsgBody((byte) cursor.getShort(offset + 5));
+        entity.setFromuser(cursor.getString(offset + 0));
+        entity.setTouser(cursor.getString(offset + 1));
+        entity.setMsgdate(new java.util.Date(cursor.getLong(offset + 2)));
+        entity.setMsgtype(cursor.getInt(offset + 3));
+        entity.setMsgbody(cursor.getBlob(offset + 4));
      }
     
     /** @inheritdoc */
     @Override
-    protected Long updateKeyAfterInsert(ChatMsg entity, long rowId) {
-        entity.setId(rowId);
-        return rowId;
+    protected Void updateKeyAfterInsert(ChatMsg entity, long rowId) {
+        // Unsupported or missing PK type
+        return null;
     }
     
     /** @inheritdoc */
     @Override
-    public Long getKey(ChatMsg entity) {
-        if(entity != null) {
-            return entity.getId();
-        } else {
-            return null;
-        }
+    public Void getKey(ChatMsg entity) {
+        return null;
     }
 
     /** @inheritdoc */

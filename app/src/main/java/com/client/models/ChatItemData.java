@@ -11,20 +11,20 @@ public class ChatItemData {
     public ChatItemData() {
     }
 
-    public ChatItemData(Integer chatID, String userName, String msg, TransferMSG.TransferType msgType, Date msgDate,
+    public ChatItemData(long chatID, String userName, String msg, TransferMSG.TransferType msgSwapType, Date msgDate,
                         TransferMSG.SendStatus msgStatus, byte[] pic) {
         this.ChatID = chatID;
         this.UserName = userName;
         this.Msg = msg;
-        this.MsgType = msgType;
+        this.MsgSwapType = msgSwapType;
         this.MsgDate = msgDate;
         this.MsgStatus = msgStatus;
         this.Pic = pic;
     }
-    public Integer ChatID;
+    public long ChatID;
     public String UserName;
     public String Msg;
-    public TransferMSG.TransferType MsgType;
+    public TransferMSG.TransferType MsgSwapType;
     public Date MsgDate;
     public TransferMSG.SendStatus MsgStatus;
     public byte[] Pic;

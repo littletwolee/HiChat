@@ -6,87 +6,73 @@ package com.client.models;
  */
 public class ChatMsg {
 
-    private Long id;
     /** Not-null value. */
-    private String FromUser;
+    private String Fromuser;
     /** Not-null value. */
-    private String ToUser;
+    private String Touser;
     /** Not-null value. */
-    private java.util.Date MsgDate;
+    private java.util.Date Msgdate;
+    private int Msgtype;
     /** Not-null value. */
-    private String MsgType;
-    private byte MsgBody;
+    private byte[] Msgbody;
 
     public ChatMsg() {
     }
 
-    public ChatMsg(Long id) {
-        this.id = id;
-    }
-
-    public ChatMsg(Long id, String FromUser, String ToUser, java.util.Date MsgDate, String MsgType, byte MsgBody) {
-        this.id = id;
-        this.FromUser = FromUser;
-        this.ToUser = ToUser;
-        this.MsgDate = MsgDate;
-        this.MsgType = MsgType;
-        this.MsgBody = MsgBody;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    public ChatMsg(String Fromuser, String Touser, java.util.Date Msgdate, int Msgtype, byte[] Msgbody) {
+        this.Fromuser = Fromuser;
+        this.Touser = Touser;
+        this.Msgdate = Msgdate;
+        this.Msgtype = Msgtype;
+        this.Msgbody = Msgbody;
     }
 
     /** Not-null value. */
-    public String getFromUser() {
-        return FromUser;
+    public String getFromuser() {
+        return Fromuser;
     }
 
     /** Not-null value; ensure this value is available before it is saved to the database. */
-    public void setFromUser(String FromUser) {
-        this.FromUser = FromUser;
+    public void setFromuser(String Fromuser) {
+        this.Fromuser = Fromuser;
     }
 
     /** Not-null value. */
-    public String getToUser() {
-        return ToUser;
+    public String getTouser() {
+        return Touser;
     }
 
     /** Not-null value; ensure this value is available before it is saved to the database. */
-    public void setToUser(String ToUser) {
-        this.ToUser = ToUser;
+    public void setTouser(String Touser) {
+        this.Touser = Touser;
     }
 
     /** Not-null value. */
-    public java.util.Date getMsgDate() {
-        return MsgDate;
+    public java.util.Date getMsgdate() {
+        return Msgdate;
     }
 
     /** Not-null value; ensure this value is available before it is saved to the database. */
-    public void setMsgDate(java.util.Date MsgDate) {
-        this.MsgDate = MsgDate;
+    public void setMsgdate(java.util.Date Msgdate) {
+        this.Msgdate = Msgdate;
+    }
+
+    public int getMsgtype() {
+        return Msgtype;
+    }
+
+    public void setMsgtype(int Msgtype) {
+        this.Msgtype = Msgtype;
     }
 
     /** Not-null value. */
-    public String getMsgType() {
-        return MsgType;
+    public byte[] getMsgbody() {
+        return Msgbody;
     }
 
     /** Not-null value; ensure this value is available before it is saved to the database. */
-    public void setMsgType(String MsgType) {
-        this.MsgType = MsgType;
-    }
-
-    public byte getMsgBody() {
-        return MsgBody;
-    }
-
-    public void setMsgBody(byte MsgBody) {
-        this.MsgBody = MsgBody;
+    public void setMsgbody(byte[] Msgbody) {
+        this.Msgbody = Msgbody;
     }
 
 }

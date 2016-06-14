@@ -1,9 +1,11 @@
 package com.example;
 
 import java.lang.reflect.Method;
+import java.lang.reflect.Type;
 
 import de.greenrobot.daogenerator.DaoGenerator;
 import de.greenrobot.daogenerator.Entity;
+import de.greenrobot.daogenerator.PropertyType;
 import de.greenrobot.daogenerator.Schema;
 
 public class Generater {
@@ -21,18 +23,17 @@ public class Generater {
     private static void addUser(Schema schema) {
         Entity user = schema.addEntity("User");
         user.addIdProperty();
-        user.addStringProperty("UserName").notNull();
-        user.addStringProperty("PassWord").notNull();
-        user.addBooleanProperty("IsLogin").notNull();
-        user.addDateProperty("LastLogin").notNull();
+        user.addStringProperty("Username").notNull();
+        user.addStringProperty("Password").notNull();
+        user.addBooleanProperty("Islogin").notNull();
+        user.addDateProperty("Lastlogin").notNull();
     }
     private static void addChatMsg(Schema schema) {
         Entity chatMsg = schema.addEntity("ChatMsg");
-        chatMsg.addIdProperty();
-        chatMsg.addStringProperty("FromUser").notNull();
-        chatMsg.addStringProperty("ToUser").notNull();
-        chatMsg.addDateProperty("MsgDate").notNull();
-        chatMsg.addStringProperty("MsgType").notNull();
-        chatMsg.addByteProperty("MsgBody").notNull();
+        chatMsg.addStringProperty("Fromuser").notNull();
+        chatMsg.addStringProperty("Touser").notNull();
+        chatMsg.addDateProperty("Msgdate").notNull();
+        chatMsg.addIntProperty("Msgtype").notNull();
+        chatMsg.addByteArrayProperty("Msgbody").notNull();
     }
 }

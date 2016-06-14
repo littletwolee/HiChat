@@ -21,7 +21,7 @@ import java.util.Map;
 public class ChatAdapter extends BaseAdapter {
     private LayoutInflater mInflater = null;
     private Activity activity = null;
-    public Map<Integer, ChatItemData> data;
+    public Map<Long, ChatItemData> data;
     private static Map mapView;
     private static final int SEND = 0;
     private static final int RECEIVE = 1;
@@ -43,7 +43,7 @@ public class ChatAdapter extends BaseAdapter {
     public Object getItem(int position) {
         // Get the data item associated with the specified position in the data set.
         //获取数据集中与指定索引对应的数据项
-        return data.get(position);
+        return data.get((long)position);
     }
     @Override
     public long getItemId(int position) {
@@ -53,9 +53,8 @@ public class ChatAdapter extends BaseAdapter {
     }
     @Override
     public int getItemViewType(int position) {
-
-        ChatItemData chatItemData = data.get(position);
-        int type = chatItemData.MsgType.ordinal();
+        ChatItemData chatItemData = data.get((long)position);
+        int type = chatItemData.MsgSwapType.ordinal();
         return type;
     }
     @Override

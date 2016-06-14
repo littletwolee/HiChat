@@ -8,12 +8,12 @@ public class User {
 
     private Long id;
     /** Not-null value. */
-    private String UserName;
+    private String Username;
     /** Not-null value. */
-    private String PassWord;
-    private boolean IsLogin;
+    private String Password;
+    private boolean Islogin;
     /** Not-null value. */
-    private java.util.Date LastLogin;
+    private java.util.Date Lastlogin;
 
     public User() {
     }
@@ -22,12 +22,12 @@ public class User {
         this.id = id;
     }
 
-    public User(Long id, String UserName, String PassWord, boolean IsLogin, java.util.Date LastLogin) {
+    public User(Long id, String Username, String Password, boolean Islogin, java.util.Date Lastlogin) {
         this.id = id;
-        this.UserName = UserName;
-        this.PassWord = PassWord;
-        this.IsLogin = IsLogin;
-        this.LastLogin = LastLogin;
+        this.Username = Username;
+        this.Password = Password;
+        this.Islogin = Islogin;
+        this.Lastlogin = Lastlogin;
     }
 
     public Long getId() {
@@ -39,41 +39,41 @@ public class User {
     }
 
     /** Not-null value. */
-    public String getUserName() {
-        return UserName;
+    public String getUsername() {
+        return Username;
     }
 
     /** Not-null value; ensure this value is available before it is saved to the database. */
-    public void setUserName(String UserName) {
-        this.UserName = UserName;
+    public void setUsername(String Username) {
+        this.Username = Username;
     }
 
     /** Not-null value. */
-    public String getPassWord() {
-        return PassWord;
+    public String getPassword() {
+        return Password;
     }
 
     /** Not-null value; ensure this value is available before it is saved to the database. */
-    public void setPassWord(String PassWord) {
-        this.PassWord = PassWord;
+    public void setPassword(String Password) {
+        this.Password = Password;
     }
 
-    public boolean getIsLogin() {
-        return IsLogin;
+    public boolean getIslogin() {
+        return Islogin;
     }
 
-    public void setIsLogin(boolean IsLogin) {
-        this.IsLogin = IsLogin;
+    public void setIslogin(boolean Islogin) {
+        this.Islogin = Islogin;
     }
 
     /** Not-null value. */
-    public java.util.Date getLastLogin() {
-        return LastLogin;
+    public java.util.Date getLastlogin() {
+        return Lastlogin;
     }
 
     /** Not-null value; ensure this value is available before it is saved to the database. */
-    public void setLastLogin(java.util.Date LastLogin) {
-        this.LastLogin = LastLogin;
+    public void setLastlogin(java.util.Date Lastlogin) {
+        this.Lastlogin = Lastlogin;
     }
 
 }

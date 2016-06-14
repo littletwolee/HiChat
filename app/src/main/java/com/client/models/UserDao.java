@@ -24,10 +24,10 @@ public class UserDao extends AbstractDao<User, Long> {
     */
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
-        public final static Property UserName = new Property(1, String.class, "UserName", false, "USER_NAME");
-        public final static Property PassWord = new Property(2, String.class, "PassWord", false, "PASS_WORD");
-        public final static Property IsLogin = new Property(3, boolean.class, "IsLogin", false, "IS_LOGIN");
-        public final static Property LastLogin = new Property(4, java.util.Date.class, "LastLogin", false, "LAST_LOGIN");
+        public final static Property Username = new Property(1, String.class, "Username", false, "USERNAME");
+        public final static Property Password = new Property(2, String.class, "Password", false, "PASSWORD");
+        public final static Property Islogin = new Property(3, boolean.class, "Islogin", false, "ISLOGIN");
+        public final static Property Lastlogin = new Property(4, java.util.Date.class, "Lastlogin", false, "LASTLOGIN");
     };
 
 
@@ -44,10 +44,10 @@ public class UserDao extends AbstractDao<User, Long> {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"USER\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY ," + // 0: id
-                "\"USER_NAME\" TEXT NOT NULL ," + // 1: UserName
-                "\"PASS_WORD\" TEXT NOT NULL ," + // 2: PassWord
-                "\"IS_LOGIN\" INTEGER NOT NULL ," + // 3: IsLogin
-                "\"LAST_LOGIN\" INTEGER NOT NULL );"); // 4: LastLogin
+                "\"USERNAME\" TEXT NOT NULL ," + // 1: Username
+                "\"PASSWORD\" TEXT NOT NULL ," + // 2: Password
+                "\"ISLOGIN\" INTEGER NOT NULL ," + // 3: Islogin
+                "\"LASTLOGIN\" INTEGER NOT NULL );"); // 4: Lastlogin
     }
 
     /** Drops the underlying database table. */
@@ -65,10 +65,10 @@ public class UserDao extends AbstractDao<User, Long> {
         if (id != null) {
             stmt.bindLong(1, id);
         }
-        stmt.bindString(2, entity.getUserName());
-        stmt.bindString(3, entity.getPassWord());
-        stmt.bindLong(4, entity.getIsLogin() ? 1L: 0L);
-        stmt.bindLong(5, entity.getLastLogin().getTime());
+        stmt.bindString(2, entity.getUsername());
+        stmt.bindString(3, entity.getPassword());
+        stmt.bindLong(4, entity.getIslogin() ? 1L: 0L);
+        stmt.bindLong(5, entity.getLastlogin().getTime());
     }
 
     /** @inheritdoc */
@@ -82,10 +82,10 @@ public class UserDao extends AbstractDao<User, Long> {
     public User readEntity(Cursor cursor, int offset) {
         User entity = new User( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
-            cursor.getString(offset + 1), // UserName
-            cursor.getString(offset + 2), // PassWord
-            cursor.getShort(offset + 3) != 0, // IsLogin
-            new java.util.Date(cursor.getLong(offset + 4)) // LastLogin
+            cursor.getString(offset + 1), // Username
+            cursor.getString(offset + 2), // Password
+            cursor.getShort(offset + 3) != 0, // Islogin
+            new java.util.Date(cursor.getLong(offset + 4)) // Lastlogin
         );
         return entity;
     }
@@ -94,10 +94,10 @@ public class UserDao extends AbstractDao<User, Long> {
     @Override
     public void readEntity(Cursor cursor, User entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
-        entity.setUserName(cursor.getString(offset + 1));
-        entity.setPassWord(cursor.getString(offset + 2));
-        entity.setIsLogin(cursor.getShort(offset + 3) != 0);
-        entity.setLastLogin(new java.util.Date(cursor.getLong(offset + 4)));
+        entity.setUsername(cursor.getString(offset + 1));
+        entity.setPassword(cursor.getString(offset + 2));
+        entity.setIslogin(cursor.getShort(offset + 3) != 0);
+        entity.setLastlogin(new java.util.Date(cursor.getLong(offset + 4)));
      }
     
     /** @inheritdoc */

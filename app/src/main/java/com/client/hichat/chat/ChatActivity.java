@@ -17,11 +17,15 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
+import com.alibaba.fastjson.JSON;
 import com.client.adapters.ChatAdapter;
+import com.client.enums.MsgType;
 import com.client.enums.TransferMSG;
 import com.client.hichat.R;
 import com.client.hichat.user.UserInfoActivity;
 import com.client.models.ChatItemData;
+import com.client.models.ChatMsg;
+import com.client.models.JsonResult;
 import com.client.tasks.ChatGetDataTask;
 import com.client.tasks.ChatReceiveMsgTask;
 import com.client.tasks.ChatSendMsgTask;
@@ -37,6 +41,7 @@ import org.jivesoftware.smack.chat.ChatMessageListener;
 import org.jivesoftware.smack.packet.Message;
 
 import java.util.Date;
+
 
 
 public class ChatActivity extends Activity{
@@ -219,8 +224,10 @@ public class ChatActivity extends Activity{
         @Override
         public void onClick(View v) {
             String msg = mEditTextContent.getText().toString();
-            Integer chatid = chatAdapter.data.size();
-            ChatItemData senddata = new ChatItemData(chatid, "me", msg,
+            long chatid = chatAdapter.data.size();
+            ChatMsg chatMsg = new ChatMsg("me", "user2", new Date(),
+                    MsgType.Text.getValue(), msg.getBytes());
+            ChatItemData senddata = new ChatItemData(chatid, "me", JSON.toJSONString(chatMsg),
                     TransferMSG.TransferType.SEND, new Date(), TransferMSG.SendStatus.SENDING, null);
             chatAdapter.data.put(chatid, senddata);
             chatAdapter.notifyDataSetChanged();
@@ -251,7 +258,15 @@ public class ChatActivity extends Activity{
                         ChatReceiveMsgTask chatReceiveMsgTask = new ChatReceiveMsgTask();
                         chatReceiveMsgTask.chatAdapter = chatAdapter;
                         chatReceiveMsgTask.listView = listView;
-                        chatReceiveMsgTask.chatItemData = new ChatItemData(chatAdapter.data.size(), "user2", msg.getBody(),
+                        ChatMsg chatMsg = (ChatMsg)JSON.parse(msg.getBody());
+                        long id = System.currentTimeMillis();
+                        String msgbody = null;
+                        try{
+                            msgbody = new String(chatMsg.getMsgbody(), "GB2312");
+                        }catch (Exception e){
+
+                        }
+                        chatReceiveMsgTask.chatItemData = new ChatItemData(id, chatMsg.getFromuser(), msgbody,
                                 TransferMSG.TransferType.RECEIVE, new Date(), null, null);
                         chatReceiveMsgTask.execute();
                     }
