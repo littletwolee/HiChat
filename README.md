@@ -14,8 +14,8 @@ If you like it or you have some questions, Feel free to contact me.
 * [jxmpp-core & jxmpp-util-cache](https://github.com/igniterealtime/jxmpp) -- An Open Source XMPP Base Library written in Java
 * [smack](https://github.com/igniterealtime/Smack) -- A highly modular and portable open source XMPP client library written in Java for JVMs and Android
 * [greenDAO](https://github.com/greenrobot/greenDAO) -- A light & fast ORM solution for Android that maps objects to SQLite databases
-* [freemarker]() -- A Java library to generate text output based on templates and changing data
-
+* [freemarker](https://github.com/apache/incubator-freemarker) -- A Java library to generate text output based on templates and changing data
+* [fastjson]() -- A fast JSON parser/generator for Java
 ##Application & Package Version
 
 * Android-PullToRefresh 2.1.1
@@ -25,3 +25,4 @@ If you like it or you have some questions, Feel free to contact me.
 * smack 4.1.1
 * greenDAO 2.1.0
 * freemarker 2.3.23
+* fastjson-1.2.12.jar
