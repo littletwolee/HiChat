@@ -6,7 +6,7 @@ import android.graphics.Picture;
  * Created by lee on 6/14/16.
  */
 public enum MsgType {
-    Text(0), Voice(1), Picture(2), File(3) {
+    TypeText(0), TypeVoice(1), TypePicture(2), TypeFile(3) {
 
         @Override
         public boolean isRest() {

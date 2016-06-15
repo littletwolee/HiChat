@@ -58,6 +58,7 @@ public class ChatActivity extends Activity{
     private DBHelper database;
     private static ChatManager cm;
     private Chat topChat;
+    private static MsgType msgtype;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -228,11 +229,11 @@ public class ChatActivity extends Activity{
             ChatMsg chatMsg = null;
             try {
                 chatMsg = new ChatMsg("me", "user1", new Date(),
-                        MsgType.Text.getValue(), msg.getBytes("UTF8"));
+                        MsgType.TypeText.getValue(), msg.getBytes("UTF8"));
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
-            ChatItemData senddata = new ChatItemData(chatid, "me", JSON.toJSONString(chatMsg),
+            ChatItemData senddata = new ChatItemData(chatid, "me", msg ,JSON.toJSONString(chatMsg),
                     TransferMSG.TransferType.SEND, new Date(), TransferMSG.SendStatus.SENDING, null);
             chatAdapter.data.put(chatid, senddata);
             chatAdapter.notifyDataSetChanged();
@@ -271,7 +272,7 @@ public class ChatActivity extends Activity{
                         }catch (Exception e){
 
                         }
-                        chatReceiveMsgTask.chatItemData = new ChatItemData(id, chatMsg.getFromuser(), msgbody,
+                        chatReceiveMsgTask.chatItemData = new ChatItemData(id, chatMsg.getFromuser(), msgbody, null,
                                 TransferMSG.TransferType.RECEIVE, new Date(), null, null);
                         chatReceiveMsgTask.execute();
                     }

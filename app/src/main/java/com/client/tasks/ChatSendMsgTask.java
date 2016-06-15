@@ -23,7 +23,7 @@ public class ChatSendMsgTask extends AsyncTask<Void, Void, Boolean> {
     protected Boolean doInBackground(Void... params) {
         boolean flag = false;
         try{
-            topChat.sendMessage(chatItemData.Msg);
+            topChat.sendMessage(chatItemData.SwapMsg);
             flag = true;
         }catch (Exception e){}
         return  flag;
