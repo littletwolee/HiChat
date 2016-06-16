@@ -14,6 +14,7 @@ import com.client.hichat.R;
 import com.client.models.User;
 import com.client.moudles.UserHelper;
 import com.client.tools.AsyncRestClient;
+import com.client.tools.AuthHelper;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -35,6 +36,7 @@ public class LoginActivity extends AppCompatActivity {
     private RelativeLayout rl_back;
     private String _Url, name, pwd;
     private UserHelper userHelper;
+    private AuthHelper authHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +47,7 @@ public class LoginActivity extends AppCompatActivity {
     private void inIt() {
         //variable assignment
         _Url = "user/login?";
+        authHelper = new AuthHelper(this);
         //register controls
         btn_register = (Button)findViewById(R.id.btn_register);
         btn_login = (Button)findViewById(R.id.btn_login);
@@ -83,7 +86,7 @@ public class LoginActivity extends AppCompatActivity {
             try {
                 userHelper.updateUser(userHelper.findUser(name));
             }catch (Exception e){}
-            AsyncRestClient.get(LoginActivity.this, _Url+"username="+name+"&password="+pwd, null,
+            AsyncRestClient.get(LoginActivity.this, _Url+"username="+name+"&password="+authHelper.encryption(pwd), null,
                     getString(R.string.http_json), registerHandler);
         }
     };

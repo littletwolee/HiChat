@@ -1,5 +1,6 @@
 package com.client.hichat;
 
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,7 @@ import android.view.MenuItem;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import com.client.hichat.user.LoginActivity;
 import com.client.models.DaoMaster;
 import com.client.models.DaoSession;
 import com.client.models.UserDao;
@@ -33,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         userHelper = new UserHelper(MainActivity.this);
-//        if(userHelper.isAuth()){
+        if(userHelper.isAuth()){
             setContentView(R.layout.activity_main);
             fragments.add(new ChatsFragment());
             fragments.add(new ContactsFragment());
@@ -54,10 +56,10 @@ public class MainActivity extends AppCompatActivity {
                         }
 
                     });
-//        }else {
-//            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-//            this.startActivity(intent);
-//        }
+        }else {
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            this.startActivity(intent);
+        }
         connectServer();
     }
     @Override

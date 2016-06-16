@@ -18,6 +18,7 @@ import com.client.hichat.chat.ChatActivity;
 import com.client.models.User;
 import com.client.moudles.UserHelper;
 import com.client.tools.AsyncRestClient;
+import com.client.tools.AuthHelper;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -40,6 +41,7 @@ public class RegisterActivity extends AppCompatActivity {
     private String _Url, name, pwd;
     private UserHelper userHelper;
     private User user;
+    private AuthHelper authHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +51,7 @@ public class RegisterActivity extends AppCompatActivity {
     private void inIt() {
         //variable assignment
         _Url = "user/register";
+        authHelper = new AuthHelper(this);
         //register controls
         btn_register = (Button)findViewById(R.id.btn_register);
         et_user_name = (EditText) findViewById(R.id.et_user_name);
@@ -80,7 +83,7 @@ public class RegisterActivity extends AppCompatActivity {
                     return;
                 }
                 params.put("name", name);
-                params.put("pwd", pwd);
+                params.put("pwd", authHelper.encryption(pwd));
                 AsyncRestClient.post(RegisterActivity.this, _Url, new StringEntity(params.toString()), getString(R.string.http_json), registerHandler);
             } catch (JSONException e) {
                 e.printStackTrace();

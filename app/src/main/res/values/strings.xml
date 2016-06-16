@@ -3,10 +3,12 @@
     <string name="app_name" translatable="false">HiChat</string>
     <!--sqlite-->
     <string name="db" translatable="false">db</string>
+    <!--auth slice-->
+    <string name="auth_slice" translatable="false"></string>
     <!--connection-->
-    <string name="api_url" translatable="false">http://192.241.215.27:15280/api/</string>
-    <string name="xmpp_host" translatable="false">192.241.215.27</string>
-    <string name="xmpp_domain" translatable="false">im.com</string>
-    <string name="xmpp_port" translatable="false">15222</string>
+    <string name="api_url" translatable="false">http:///api/</string>
+    <string name="xmpp_host" translatable="false"></string>
+    <string name="xmpp_domain" translatable="false"></string>
+    <string name="xmpp_port" translatable="false"></string>
     <string name="http_json" translatable="false">application/json</string>
 </resources>
