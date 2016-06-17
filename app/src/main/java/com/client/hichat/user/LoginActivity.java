@@ -111,7 +111,9 @@ public class LoginActivity extends AppCompatActivity {
             super.onSuccess(statusCode, headers, response);
             try {
                 userHelper.login(new User(null, name, pwd, true, new Date()));
-            }catch (Exception e){}
+            }catch (Exception e){
+                Log.d("iii","123");
+            }
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             LoginActivity.this.startActivity(intent);
         }
