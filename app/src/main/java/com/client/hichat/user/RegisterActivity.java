@@ -4,6 +4,7 @@ package com.client.hichat.user;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -52,6 +53,7 @@ public class RegisterActivity extends AppCompatActivity {
         //variable assignment
         _Url = "user/register";
         authHelper = new AuthHelper(this);
+        userHelper = new UserHelper(this);
         //register controls
         btn_register = (Button)findViewById(R.id.btn_register);
         et_user_name = (EditText) findViewById(R.id.et_user_name);
@@ -82,8 +84,9 @@ public class RegisterActivity extends AppCompatActivity {
                     et_user_name.setError("password is required");
                     return;
                 }
+                pwd = authHelper.encryption(pwd);
                 params.put("name", name);
-                params.put("pwd", authHelper.encryption(pwd));
+                params.put("pwd", pwd);
                 AsyncRestClient.post(RegisterActivity.this, _Url, new StringEntity(params.toString()), getString(R.string.http_json), registerHandler);
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -104,8 +107,10 @@ public class RegisterActivity extends AppCompatActivity {
             super.onSuccess(statusCode, headers, response);
             try {
                 userHelper.login(new User(null, name, pwd, true, new Date()));
-            }catch (Exception e){}
-            Intent intent = new Intent(RegisterActivity.this, ChatsFragment.class);
+            }catch (Exception e){
+                Log.d("iii",e.getMessage());
+            }
+            Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
             RegisterActivity.this.startActivity(intent);
         }
 

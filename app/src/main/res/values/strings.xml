@@ -5,8 +5,9 @@
     <string name="db" translatable="false">db</string>
     <!--auth slice-->
     <string name="auth_slice" translatable="false"></string>
+    <string name="auth_salt" translatable="false"></string>
     <!--connection-->
-    <string name="api_url" translatable="false">http:///api/</string>
+    <string name="api_url" translatable="false"></string>
     <string name="xmpp_host" translatable="false"></string>
     <string name="xmpp_domain" translatable="false"></string>
     <string name="xmpp_port" translatable="false"></string>

@@ -3,6 +3,7 @@ package com.client.hichat.user;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -10,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.client.hichat.MainActivity;
 import com.client.hichat.R;
 import com.client.models.User;
 import com.client.moudles.UserHelper;
@@ -42,8 +44,14 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         userHelper = new UserHelper(this);
-        inIt();
+        if(userHelper.isAuth()) {
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            LoginActivity.this.startActivity(intent);
+        }else {
+            inIt();
+        }
     }
+
     private void inIt() {
         //variable assignment
         _Url = "user/login?";
@@ -83,10 +91,11 @@ public class LoginActivity extends AppCompatActivity {
                 et_user_name.setError("password is required");
                 return;
             }
+            pwd = authHelper.encryption(pwd);
             try {
                 userHelper.updateUser(userHelper.findUser(name));
             }catch (Exception e){}
-            AsyncRestClient.get(LoginActivity.this, _Url+"username="+name+"&password="+authHelper.encryption(pwd), null,
+            AsyncRestClient.get(LoginActivity.this, _Url+"username="+name+"&password="+pwd, null,
                     getString(R.string.http_json), registerHandler);
         }
     };
@@ -103,7 +112,8 @@ public class LoginActivity extends AppCompatActivity {
             try {
                 userHelper.login(new User(null, name, pwd, true, new Date()));
             }catch (Exception e){}
-            finish();
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            LoginActivity.this.startActivity(intent);
         }
 
         @Override

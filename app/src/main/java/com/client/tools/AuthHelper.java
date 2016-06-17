@@ -22,12 +22,16 @@ import java.util.List;
 public class AuthHelper {
     private Context context;
     private String code = "SHA-256";
+    private int saltnum = 2;
     public AuthHelper(Context context){
         this.context = context;
     }
     public String encryption(String pwd){
-        String encryptionPwd = pwd + String.valueOf(System.currentTimeMillis());
-        return getAuthToken(code, encryptionPwd);
+        String encryptionPwd = pwd;
+        for(int i = 1; i<= saltnum; i++){
+            encryptionPwd = getAuthToken(code, encryptionPwd + context.getString(R.string.auth_salt));
+        }
+        return encryptionPwd;
     }
     public AsyncHttpClient getAuth(AsyncHttpClient asyncHttpClient) throws JSONException {
         String timestamp = String.valueOf(System.currentTimeMillis());

@@ -56,11 +56,12 @@ public class MainActivity extends AppCompatActivity {
                         }
 
                     });
+            connectServer();
         }else {
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
             this.startActivity(intent);
         }
-        connectServer();
+
     }
     @Override
     public void onAttachFragment(Fragment fragment) {
@@ -99,5 +100,6 @@ public class MainActivity extends AppCompatActivity {
         chatConnectionBase.Init(chatConnectionBase, this);
         chatConnectionBase.ChatConnect();
     }
+
 }
 
