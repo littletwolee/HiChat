@@ -1,13 +1,84 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.client.chat.hichat.ContactsFragment">
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/chat_white"
+    android:orientation="vertical">
+    <include android:id="@+id/layout_search" layout="@layout/layout_contacts_friends_search"/>
+    <LinearLayout
+        android:id="@+id/layout_addfriend"
+        style="@style/MMListItem"
+        android:layout_height="55.0dip"
+        android:background="@drawable/contacts_friends_item_selector"
+        android:paddingLeft="15dip">
+        <ImageView
+            android:layout_width="40dip"
+            android:layout_height="40dip"
+            android:src="@mipmap/icon_add_friend" />
+        <TextView
+            style="@style/MMFontTitleInList"
+            android:textColor="@color/contacts_black"
+            android:text="@string/recommended_friends"
+            android:layout_marginLeft="13dp"
+            android:singleLine="true" />
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/selector_black" />
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
+        android:id="@+id/layout_group"
+        style="@style/MMListItem"
+        android:layout_height="55.0dip"
+        android:background="@drawable/contacts_friends_item_selector"
+        android:paddingLeft="15dip">
+        <ImageView
+            android:layout_width="40dip"
+            android:layout_height="40dip"
+            android:src="@mipmap/icon_group" />
+        <TextView
+            style="@style/MMFontTitleInList"
+            android:textColor="@color/contacts_black"
+            android:text="@string/group_chats"
+            android:layout_marginLeft="10dp"
+            android:singleLine="true" />
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/selector_black" />
+
+    <LinearLayout
+        android:id="@+id/layout_public"
+        style="@style/MMListItem"
+        android:layout_height="55.0dip"
+        android:background="@drawable/contacts_friends_item_selector"
+        android:paddingLeft="15dip">
+        <ImageView
+            android:layout_width="40dip"
+            android:layout_height="40dip"
+            android:src="@mipmap/icon_public" />
+        <TextView
+            style="@style/MMFontTitleInList"
+            android:textColor="@color/selector_black"
+            android:text="@string/official_accounts"
+            android:layout_marginLeft="10dp"
+            android:singleLine="true" />
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/selector_black" />
+    <com.handmark.pulltorefresh.library.PullToRefreshListView
+        android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="contacts" />
-
-</FrameLayout>
+        android:layout_below="@id/pb_load_more"
+        android:cacheColorHint="#00000000"
+        android:divider="@null"
+        android:scrollbars="none"
+        android:listSelector="#00000000"
+        android:transcriptMode="disabled" />
+</LinearLayout>

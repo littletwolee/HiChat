@@ -31,4 +31,8 @@
     <string name="text_ack_msg">读取</string>
     <string name="text_delivered_msg">delivered</string>
     <string name="attach_video_call">视频聊天</string>
+    <string name="search">搜索</string>
+    <string name="recommended_friends">新的朋友</string>
+    <string name="group_chats">群聊</string>
+    <string name="official_accounts">订阅号</string>
 </resources>

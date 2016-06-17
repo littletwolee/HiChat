@@ -32,4 +32,8 @@
     <string name="text_ack_msg">read</string>
     <string name="text_delivered_msg">delivered</string>
     <string name="attach_video_call">Video Call</string>
+    <string name="search">Search</string>
+    <string name="recommended_friends">Recommended Friends</string>
+    <string name="group_chats">Group Chats</string>
+    <string name="official_accounts">Official Accounts</string>
 </resources>

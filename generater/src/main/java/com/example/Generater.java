@@ -36,4 +36,10 @@ public class Generater {
         chatMsg.addIntProperty("Msgtype").notNull();
         chatMsg.addByteArrayProperty("Msgbody").notNull();
     }
+    private static void addFriends(Schema schema) {
+        Entity friends = schema.addEntity("Friends");
+        friends.addIdProperty();
+        friends.addStringProperty("Username").notNull();
+        friends.addByteArrayProperty("Pic").notNull();
+    }
 }

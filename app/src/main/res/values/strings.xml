@@ -7,9 +7,11 @@
     <string name="auth_slice" translatable="false"></string>
     <string name="auth_salt" translatable="false"></string>
     <!--connection-->
-    <string name="api_url" translatable="false"></string>
+    <string name="api_url" translatable="false">http:///api/</string>
     <string name="xmpp_host" translatable="false"></string>
     <string name="xmpp_domain" translatable="false"></string>
     <string name="xmpp_port" translatable="false"></string>
     <string name="http_json" translatable="false">application/json</string>
+    <string name="group_chats"></string>
+    <string name="official_accounts"></string>
 </resources>

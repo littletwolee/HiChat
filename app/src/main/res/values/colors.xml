@@ -25,4 +25,7 @@
     <!--chat-->
     <color name="gray">#ff808080</color>
     <color name="chat_timestampe_bg">#dcdddd</color>
+    <!--contacts-->
+    <color name="selector_black">#ffeeeeee</color>
+    <color name="contacts_black">#ff000000</color>
 </resources>
